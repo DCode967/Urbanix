@@ -1,144 +1,666 @@
-.logo{
-    width: 120px;
-    height: 120px;
-    background-color: #1e1e2e;
-    border: 2px solid #3a3a4d;
-    border-radius: 16px 16px 16px 16px;
+:root {
+    /* =========================
+       COLORES
+       ========================= */
+
+    --color-fondo-logo: #1e1e2e;
+    --color-borde-logo: #3a3a4d;
+
+    --color-blanco: #ffffff;
+    --color-negro: #000000;
+
+    --color-fondo-body: #232323;
+    --color-fondo-tarjeta: rgb(24, 21, 21);
+
+    --color-placeholder: #b0b0b0;
+
+    --color-acento: #ff6b00;
+
+
+    /* =========================
+       TIPOGRAFÍA
+       ========================= */
+
+    --fuente-principal: Arial, sans-serif;
+    --fuente-acciones: Arial, Helvetica, sans-serif;
+
+
+    /* =========================
+       TAMAÑOS
+       ========================= */
+
+    --tamano-logo: 120px;
+    --ancho-buscador: 350px;
+    --ancho-tarjeta: 220px;
+
+    --tamano-producto: 180px;
+
+    --alto-header: 400px;
+
+
+    /* =========================
+       ESPACIADOS
+       ========================= */
+
+    --espacio-xs: 8px;
+    --espacio-sm: 10px;
+    --espacio-md: 15px;
+    --espacio-lg: 20px;
+
+
+    /* =========================
+       BORDES
+       ========================= */
+
+    --ancho-borde: 2px;
+
+    --radio-sm: 8px;
+    --radio-md: 10px;
+    --radio-lg: 12px;
+    --radio-xl: 16px;
+    --radio-redondo: 20px;
+
+
+    /* =========================
+       SOMBRAS
+       ========================= */
+
+    --sombra-logo: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --sombra-header: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --sombra-tarjeta: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+
+    /* =========================
+       TRANSICIONES
+       ========================= */
+
+    --transicion: 0.3s;
+    --transicion-boton: background-color 0.3s ease;
+
+
+    /* =========================
+       EFECTOS HOVER
+       ========================= */
+
+    --movimiento-hover: -8px;
+
+
+    /* =========================
+       GALERÍA
+       ========================= */
+
+    --columnas-galeria: 4;
+    --gap-galeria: 20px;
+
+
+    /* =========================
+       IMAGEN DEL HEADER
+       ========================= */
+
+    --imagen-header: url("./imagenes/assest/WhatsApp\ Image\ 2026-07-27\ at\ 6.33.21\ PM.jpeg");
+
+
+/* =========================
+   BANNER DE OFERTAS
+   ========================= */
+
+--banner-fondo: #1e1e2e;
+--banner-acento: #ff6b00;
+--banner-texto: #ffffff;
+--banner-texto-secundario: #b0b0b0;
+
+--banner-padding: 30px;
+--banner-radio: 16px;
+
+--banner-gap: 20px;
+
+--banner-sombra: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+--banner-titulo-size: 36px;
+--banner-subtitulo-size: 18px;
+
+--banner-boton-padding: 12px 22px;
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+    width: var(--tamano-logo);
+    height: var(--tamano-logo);
+
+    background-color: var(--color-fondo-logo);
+
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+
+    border-radius: var(--radio-xl);
+
     display: flex;
+
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    box-sizing:border-box;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    padding: var(--espacio-sm);
+
+    box-sizing: border-box;
+
+    box-shadow: var(--sombra-logo);
 }
 
 
-.header{
-    min-height: 400px;
+/* =========================
+   TÍTULOS
+   ========================= */
 
-
-    background: linear-gradient(rgba(0,0,0,.15), rgba(35,35,35,1)), url(./imagenes/assest/WhatsApp\ Image\ 2026-07-27\ at\ 6.33.21\ PM.jpeg);
-     background-size: contain;
-     background-repeat: no-repeat;
-     background-position: center top;
-    padding: 0px;
-    color: #fff;
-    padding: 20px;
-    text-align:left;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    
+h1 {
+    color: var(--color-blanco);
+    text-align: center;
 }
 
-.buscador input{
-    width: 350px;
-    padding: 10px;
+h2 {
+    color: var(--color-blanco);
+    text-align: center;
+}
 
-    background-color: #3a3a4d;
-    color: white;
-    
+h3 {
+    color: var(--color-blanco);
+}
+
+/* =========================
+   PARRAFOS
+   ========================= */
+   p {
+    color: var(--color-blanco);
+   }
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    min-height: var(--alto-header);
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.15),
+            rgba(35, 35, 35, 1)
+        ),
+        var(--imagen-header);
+
+    background-size: contain;
+
+    background-repeat: no-repeat;
+
+    background-position: center top;
+
+    padding: var(--espacio-lg);
+
+    color: var(--color-blanco);
+
+    text-align: left;
+
+    box-shadow: var(--sombra-header);
+}
+
+
+/* =========================
+   BUSCADOR
+   ========================= */
+
+.buscador input {
+    width: var(--ancho-buscador);
+
+    padding: var(--espacio-sm);
+
+    background-color: var(--color-borde-logo);
+
+    color: var(--color-blanco);
 
     border: none;
-    border-radius: 20px;
-    
+
+    border-radius: var(--radio-redondo);
+
     outline: none;
 }
 
+
 .buscador input::placeholder {
-    color: #b0b0b0;
+    color: var(--color-placeholder);
 }
 
-.buscador input :focus {
-    border: 2px solid #ff6b00;
+
+.buscador input:focus {
+    border: var(--ancho-borde) solid var(--color-acento);
 }
+
+
+/* =========================
+   ACCIONES
+   ========================= */
 
 .acciones {
     display: flex;
-    gap: 15px;
-    font-family: Arial, Helvetica, sans-serif;
+
+    gap: var(--espacio-md);
+
+    font-family: var(--fuente-acciones);
 }
 
-.acciones a{
+
+.acciones a {
     text-decoration: none;
-    color: white;   
 
-    padding: 10px 15px;
+    color: var(--color-blanco);
 
-    border-radius: 8px;
+    padding: var(--espacio-sm) var(--espacio-md);
 
-    transition: 0.3s;
+    border-radius: var(--radio-sm);
 
+    transition: var(--transicion);
 }
 
 
 .acciones a:hover {
-    background-color: #ff6b00;
-
+    background-color: var(--color-acento);
 }
 
-.acciones a :last-child {
-    background-color: #ff6b00;
+
+.acciones a:last-child {
+    background-color: var(--color-acento);
+
     font-weight: bold;
 }
 
-.img{
+
+/* =========================
+   IMÁGENES
+   ========================= */
+
+.img {
     width: 100%;
+
     height: 100%;
+
     object-fit: contain;
+
     display: block;
 }
 
+
+/* =========================
+   HTML
+   ========================= */
+
 html {
     scroll-behavior: smooth;
-} 
-
-body{
-    font-family: Arial, sans-serif;
-    background-color: #232323
-    
 }
 
 
-.galeria{
+/* =========================
+   BODY
+   ========================= */
+
+body {
+    font-family: var(--fuente-principal);
+
+    background-color: var(--color-fondo-body);
+}
+
+/* =========================
+   NAVBAR
+   ========================= */
+   nav{
+
+    background:rgba(0,0,0,.90);
+
+    backdrop-filter:blur(8px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:var(--sombra);
+
+}
+
+nav ul{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:40px;
+
+    list-style:none;
+
+    padding:18px;
+
+}
+
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    position:relative;
+
+}
+
+
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-5px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--color-principal);
+
+    transition:.3s;
+
+}
+
+
+nav a:hover{
+
+    color:var(--color-acento);
+
+}
+
+
+/* =========================
+   CONTENEDOR DE TARJETAS
+   ========================= */
+
+.contenedor-tarjetas {
+    display: flex;
+
+    gap: var(--espacio-lg);
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+
+/* =========================
+   TARJETA
+   ========================= */
+
+.tarjeta {
+    width: var(--ancho-tarjeta);
+
+    background-color: var(--color-fondo-tarjeta);
+
+    border-radius: var(--radio-lg);
+
+    padding: var(--espacio-md);
+
+    text-align: center;
+
+    box-shadow: var(--sombra-tarjeta);
+
+    transition: var(--transicion);
+}
+
+
+.tarjeta:hover {
+    transform: translateY(var(--movimiento-hover));
+}
+
+
+.tarjeta img {
+    width: 100%;
+
+    border-radius: var(--radio-md);
+}
+
+
+.tarjeta button {
+    margin-top: var(--espacio-md);
+}
+
+
+/* =========================
+   GALERÍA
+   ========================= */
+
+.galeria {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
+
+    grid-template-columns: repeat(
+        var(--columnas-galeria),
+        1fr
+    );
+
+    gap: var(--gap-galeria);
+
+    padding: var(--espacio-lg);
+
+    transition: var(--transicion);
 }
 
-.producto{
+
+.galeria:hover {
+    transform: translateY(var(--movimiento-hover));
+}
+
+
+/* =========================
+   PRODUCTO
+   ========================= */
+
+.producto {
     text-align: center;
 }
 
-.producto img{
-    width: 180px;
-    height: 180px;
+
+.producto img {
+    width: var(--tamano-producto);
+
+    height: var(--tamano-producto);
+
     object-fit: cover;
-    border-radius: 10px;
+
+    border-radius: var(--radio-md);
 }
+
 
 
 div.galerry-item div.desc {
-    padding: 15px;
+    padding: var(--espacio-md);
+
     text-align: center;
 }
+
+/* =========================
+   BANNER DE OFERTAS
+   ========================= */
+
+.banner-oferta {
+    width: 100%;
+
+    min-height: 250px;
+
+    box-sizing: border-box;
+
+    padding: var(--banner-padding);
+
+    background-color: var(--banner-acento);
+
+    border-radius: var(--banner-radio);
+
+    box-shadow: var(--banner-sombra);
+
+    color: var(--banner-texto);
+
+    overflow: hidden;
+
+    margin: var(--espacio-lg) 0;
+
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+
+
+.banner-contenido {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: var(--banner-gap);
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.banner-etiqueta {
+    color: var(--banner-acento);
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+}
+
+
+
+
+.banner-oferta h2 {
+    margin: 0;
+
+    color: var(--banner-texto);
+
+    position: relative;
+
+    font-size: var(--banner-titulo-size);
+
+    text-transform: uppercase;
+
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+
+}
+
+
+.banner-oferta p {
+    margin: 0;
+
+    color: var(--banner-texto-secundario);
+
+    font-size: var(--banner-subtitulo-size);
+}
+
+
+
+
+
+.banner-boton:hover {
+    transform: translateY(-3px);
+
+    box-shadow: var(--sombra-tarjeta);
+
+    color: var(--banner-texto);
+}
+
+   /* =========================
+   BENEFICIOS
+   ========================= */
+   .beneficios{
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--espacio-lg);
+   }
+
+   .beneficio{
+    background-color: linear-gradient(135deg, var(--color-acento) 0% var (--color-acento-claro) 100%);
+    color: var(--color-blanco);
+    padding: var(--espacio-lg) var(--espacio-md)    ;
+    border-radius: var(--radio-redondo);
+    text-align: center;
+    box-shadow: var(--sombra-tarjeta);
+    transition: background-color var(--transicion), transform var(--transicion);
+   }
+
+   .beneficio:hover{
+    transform: translateY(var(--movimiento-hover));
+
+   }
+
+   .beneficio h2{
+    font-size: 1.6rem;
+    margin: 0 0 8px 0;
+   }
+
+
+   .beneficio p{
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.95;
+   }
+/* =========================
+   BOTONES
+   ========================= */
 
 button {
-    background-color: #000;
-    border-radius: 50px;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    background-color: var(--color-negro);
+
+    color: var(--color-blanco);
+
+    border: none;
+
+    padding: var(--espacio-sm) var(--espacio-lg);
+
+    border-radius: var(--radio-redondo);
+
     cursor: pointer;
+
+    transition: var(--transicion-boton);
 }
 
 
+button:hover {
+    background-color: var(--color-acento);
+}
 
-
-
-
-
-                
