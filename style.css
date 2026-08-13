@@ -824,3 +824,60 @@ footer a {
 
     font-size: 14px;
 }
+
+@media (max-width: 1024px) {
+    .galeria {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--gap-galeria);
+        padding: var(--espacio-lg);
+    }
+
+}
+
+@media (max-width: 600px) {
+    .galeria {
+        grid-template-columns: 1fr;
+        padding: var(--espacio-lg);
+    }
+
+    .tarjeta {
+        width: 90%;
+        max-width: 320px;
+    }
+
+    .buscador input {
+        width: 100%;
+        max-width: 350px;
+        box-sizing: border-box;
+    }
+
+    .acciones {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header{
+        min-height: 300px;
+        padding: 15px;
+        background-size: cover;
+    }
+
+        h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+    }
+}
