@@ -97,7 +97,7 @@
        IMAGEN DEL HEADER
        ========================= */
 
-    --imagen-header: url("./imagenes/assest/WhatsApp\ Image\ 2026-07-27\ at\ 6.33.21\ PM.jpeg");
+    --imagen-header: url("./imagenes/assest/banner-urbanix.jpeg");
 
 
 /* =========================
@@ -120,6 +120,17 @@
 --banner-subtitulo-size: 18px;
 
 --banner-boton-padding: 12px 22px;
+
+
+
+ /* OPINIONES */
+ --opinion-fondo: #1e1e2e;
+ --opinion-input: #3a3a4d;
+
+ /* FOOTER */
+ --footer-fondo: #1e1e2e;
+ --footer-texto: #ffffff;
+ --footer-texto-secundario: #b0b0b0;
 }
 
 
@@ -156,7 +167,7 @@
 
 h1 {
     color: var(--color-blanco);
-    text-align: center;
+    
 }
 
 h2 {
@@ -203,6 +214,8 @@ h3 {
     text-align: left;
 
     box-shadow: var(--sombra-header);
+
+    
 }
 
 
@@ -664,3 +677,150 @@ button:hover {
     background-color: var(--color-acento);
 }
 
+.testimonios {
+    width: 90%;
+    max-width: 900px;
+
+    margin: var(--espacio-lg) auto;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background-color: var(--opinion-fondo);
+
+    border-radius: var(--radio-lg);
+
+    box-shadow: var(--sombra);
+
+    text-align: center;
+}
+
+
+.testimonios h2 {
+    margin-bottom: var(--espacio-md);
+
+    color: var(--color-blanco);
+
+    font-size: 28px;
+}
+
+
+.testimonios p {
+    margin-bottom: var(--espacio-md);
+
+    color: var(--color-gris);
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+.testimonios input {
+    width: 100%;
+    max-width: 500px;
+
+    padding: 12px 15px;
+
+    box-sizing: border-box;
+
+    background-color: var(--opinion-input);
+
+    color: var(--color-blanco);
+
+    border: 2px solid transparent;
+
+    border-radius: var(--radio-redondo);
+
+    outline: none;
+
+    font-family: var(--fuente-principal);
+
+    transition: var(--transicion);
+}
+
+.testimonios input::placeholder {
+    color: var(--color-gris);
+}
+
+.testimonios input::focus {
+    border-color: var(--color-acento);
+}
+
+footer {
+    margin-top: var(--espacio-lg);
+
+    padding: 40px 30px 20px;
+
+    background-color: var(--footer-fondo);
+
+    color: var(--footer-texto);
+
+    box-shadow: var(--sombra);
+}
+
+footer h2 {
+    margin-bottom: var(--espacio-md);
+
+    color: var(--color-blanco);
+
+    text-align: center;
+
+    font-size: 26px;
+}
+
+
+footer a {
+    color: var(--footer-texto-secundario);
+
+    text-decoration: none;
+
+    transition: var(--transicion);
+}
+
+footer a {
+    color: var(--footer-texto-secundario);
+
+    text-decoration: none;
+
+    transition: var(--transicion);
+}
+
+.footer-redes {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: var(--espacio-md);
+
+    margin: var(--espacio-md) 0;
+}.footer-redes a {
+    color: var(--footer-texto-secundario);
+
+    text-decoration: none;
+
+    transition: var(--transicion);
+}
+
+.footer-redes a:hover {
+    color: var(--color-acento);
+
+    transform: translateY(-2px);
+}
+
+.footer-copy {
+    margin-top: var(--espacio-lg);
+
+    padding-top: var(--espacio-md);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    color: var(--footer-texto-secundario);
+
+    text-align: center;
+
+    font-size: 14px;
+}
