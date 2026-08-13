@@ -838,7 +838,7 @@ footer a {
 @media (max-width: 600px) {
     .galeria {
         grid-template-columns: 1fr;
-        padding: var(--espacio-lg);
+        padding: 10px;
     }
 
     .tarjeta {
