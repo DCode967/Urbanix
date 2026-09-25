@@ -52,9 +52,10 @@
             Iniciar sesión
         </a>
 
-        <a href="carrito.html">
-            🛒 Carrito <span>(0)</span>
-        </a>
+        <button type="button" id="abrir-carrito" class="boton-carrito">
+            🛒 Carrito
+            <span id="contador-carrito">0</span>
+        </button>
 
     </div>
 
@@ -132,27 +133,94 @@
         <!-- Galeria con algunos productos -->
          <div class="galeria">
 
-    <div class="producto">
-        <img src="./imagenes/assest/ropita-pa-la-pagina.jpg" alt="">
-        <p>Conjunto deportivo</p>
-    </div>
+    
+    <article 
+    class="producto"
+    data-id="1"
+    data-nombre="Conjunto deportivo"
+    data-precio="95000"
+    data-imagen="./imagenes/assest/ropita-pa-la-pagina.jpg"
+>
 
-    <div class="producto">
-        <img src="./imagenes/assest/milan.jpg" alt="">
-        <p>Camisa del Milan</p>
-    </div>
+    <img 
+        src="./imagenes/assest/ropita-pa-la-pagina.jpg"
+        alt="Conjunto deportivo"
+    >
 
-    <div class="producto">
-        <img src="./imagenes/assest/reloj-de-motor-rotativo.jpg" alt="">
-        <p>Reloj rotativo</p>
-    </div>
+    <h3>Conjunto deportivo</h3>
 
-    <div class="producto">
-        <img src="./imagenes/assest/soporte-de-mesa-motorV8.jpg" alt="">
-        <p>Mesa motor V8</p>
-    </div>
+    <p>
+        Conjunto deportivo cómodo y moderno.
+    </p>
 
-</div>
+    <p>$95.000</p>
+
+    <button type="button" class="button agregar-carrito">
+        Agregar al carrito
+    </button>
+
+</article>
+
+    
+
+    <article 
+    class="producto"
+    data-id="2"
+    data-nombre="Camisa del Milan"
+    data-precio="110000"
+    data-imagen="./imagenes/assest/milan.jpg"
+>
+
+    <img 
+        src="./imagenes/assest/milan.jpg"
+        alt="Camisa del Milan"
+    >
+
+    <h3>Camisa del Milan</h3>
+
+    <p>
+        Camisa deportiva del Milan.
+    </p>
+
+    <p>$110.000</p>
+
+    <button type="button" class="button agregar-carrito">
+        Agregar al carrito
+    </button>
+
+</article>
+
+    <article 
+    class="producto"
+    data-id="3"
+    data-nombre="Reloj rotativo"
+    data-precio="180000"
+    data-imagen="./imagenes/assest/reloj-de-motor-rotativo.jpg"
+>
+
+    <img 
+        src="./imagenes/assest/reloj-de-motor-rotativo.jpg"
+        alt="Reloj rotativo"
+    >
+
+    <h3>Reloj rotativo</h3>
+
+    <p>
+        Reloj de diseño inspirado en motores.
+    </p>
+
+    <p>$180.000</p>
+
+    <button type="button" class="button agregar-carrito">
+        Agregar al carrito
+    </button>
+
+</article>
+
+
+
+
+
 
             
 
@@ -160,20 +228,26 @@
 
             
 
-            <div class="contenedor-productos">
+            <div class="contenedor-productos"
+            data-id="4"
+            data-nombre="Zapatillas deportivas"
+            data-precio="120000"
+            data-imagen="./imagenes/assest/zapatos.jpg">
 
                 <article class="producto">
 
-                    <img src="./imagenes/assest/zapatos.jpg" alt="Producto" width="30%" height="30%">
+                    <img src="./imagenes/assest/zapatos.jpg" alt="Producto">
 
-                    <h3>Nombre del producto</h3>
+                    <h3>Zapatillas Deportivas</h3>
 
                     <p>Zapatillas deportivas de alta calidad, perfectas para correr y entrenar. Diseñadas con materiales transpirables y suela antideslizante para mayor comodidad y seguridad.
                     </p>
 
                     <p>$120.000</p>
 
-                    <button class="button">Agregar al carrito</button>
+                    <button type="button" class="button agregar-carrito">
+                        Agregar al carrito
+                    </button>
 
                 </article>
 
@@ -255,3 +329,107 @@
         </div>
 
         <p>© 2026 Mi Tienda Online - Todos los derechos reservados
+        </p>
+
+        </footer>
+
+    <!-- ==================================================
+     CARRITO LATERAL
+     ================================================== -->
+
+<div id="overlay-carrito" class="overlay-carrito"></div>
+
+<aside id="panel-carrito" class="panel-carrito">
+
+    <!-- ENCABEZADO -->
+
+    <div class="carrito-header">
+
+        <h2>Mi carrito</h2>
+
+        <button 
+            type="button"
+            id="cerrar-carrito"
+            class="cerrar-carrito"
+            aria-label="Cerrar carrito"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <!-- PRODUCTOS -->
+
+    <div 
+        id="carrito-productos"
+        class="carrito-productos"
+    >
+
+        <!-- JavaScript agregará los productos aquí -->
+
+    </div>
+
+
+    <!-- CARRITO VACÍO -->
+
+    <div 
+        id="carrito-vacio"
+        class="carrito-vacio"
+    >
+
+        <div class="carrito-vacio-icono">
+            🛒
+        </div>
+
+        <h3>Tu carrito está vacío</h3>
+
+        <p>
+            Agrega algunos productos para comenzar.
+        </p>
+
+    </div>
+
+
+    <!-- PIE DEL CARRITO -->
+
+    <div class="carrito-footer">
+
+        <div class="carrito-resumen">
+
+            <div class="carrito-total">
+
+                <span>Total</span>
+
+                <strong id="carrito-total">
+                    $0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="vaciar-carrito"
+            class="boton-vaciar"
+        >
+            Vaciar carrito
+        </button>
+
+
+        <button
+            type="button"
+            id="finalizar-compra"
+            class="boton-finalizar"
+        >
+            Finalizar compra
+        </button>
+
+    </div>
+
+</aside>
+
+<script src="carrito.js"></script>
+</body>
