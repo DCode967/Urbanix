@@ -71,7 +71,7 @@
         <ul class="menu">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#tienda">Tienda</a></li>
-            <li><a href="#categorías">Categorías</a></li>
+            <li><a href="#categorias">Categorías</a></li>
             <li><a href="#ofertas">Ofertas</a></li>
             <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -88,12 +88,12 @@
 
             <center><p>Encuentra los mejores productos al mejor precio.</p></center>
 
-            <center><button class="button"> Comprar ahora</button></center> 
+            <center><a class="button" href="#tienda">Comprar ahora</a></center>
 
         </section>
 
         <!-- Categorías -->
-        <section id="categorías" class="categorias">
+        <section id="categorias" class="categorias">
 
             <h2>Categorías</h2>
 
@@ -103,19 +103,16 @@
                
 
                 <article class="tarjeta">
-                    <img>
                     <h3>Ropa</h3>
                     <button class="button">Ver más</button>
                 </article>
 
                 <article class="tarjeta">
-                    <img>
                     <h3>Calzado</h3>
                     <button class="button">Ver más</button>
                 </article>
 
                 <article class="tarjeta">
-                    <img>
                     <h3>Accesorios</h3>
                     <button class="button">Ver más</button>
                 </article>
@@ -228,13 +225,7 @@
 
             
 
-            <div class="contenedor-productos"
-            data-id="4"
-            data-nombre="Zapatillas deportivas"
-            data-precio="120000"
-            data-imagen="./imagenes/assest/zapatos.jpg">
-
-                <article class="producto">
+            <article class="producto" data-id="4" data-nombre="Zapatillas deportivas" data-precio="120000" data-imagen="./imagenes/assest/zapatos.jpg">
 
                     <img src="./imagenes/assest/zapatos.jpg" alt="Producto">
 
@@ -250,11 +241,6 @@
                     </button>
 
                 </article>
-
-                <!-- Más productos -->
-
-            </div>
-
         </section>
 
         <!-- Ofertas -->
@@ -284,15 +270,19 @@
         </section>
 
         <!-- Opiniones -->
-        <section class="testimonios">
+        <section id="contacto" class="testimonios">
 
             <h2>Opiniones de clientes</h2>
 
             
             <p>En esta sección podras contarnos tu valiosa opinión sobre nuestros productos y servicios.</p>
 
-<form action="text"></form>
-<input type="text" placeholder="Escribe tu opinión aquí" name="opinion">
+<form id="form-opinion">
+    <label for="opinion">Comparte tu opinión</label>
+    <input id="opinion" type="text" placeholder="Escribe tu opinión aquí" name="opinion" required maxlength="500">
+    <button type="submit">Enviar opinión</button>
+    <p id="estado-opinion" role="status" aria-live="polite"></p>
+</form>
 
         </section>
 
@@ -311,11 +301,11 @@
 
             <a href="#inicio">Inicio</a>
 
-            <a href="#Contacto">Contacto</a>
+            <a href="#contacto">Contacto</a>
 
-            <a href="#">Políticas</a>
+            <a href="#contacto">Políticas de compra: consulta antes de pagar</a>
 
-            <a href="#preguntas frecuentes">Preguntas frecuentes</a>
+            <a href="#contacto">Contacto y opiniones</a>
 
         </div>
 
@@ -432,4 +422,12 @@
 </aside>
 
 <script src="carrito.js"></script>
+<script>
+document.getElementById("form-opinion").addEventListener("submit", evento => {
+    evento.preventDefault();
+    document.getElementById("estado-opinion").textContent = "Gracias por tu opinión. Este formulario aún no está conectado a un servidor.";
+    evento.currentTarget.reset();
+});
+</script>
 </body>
+</html>

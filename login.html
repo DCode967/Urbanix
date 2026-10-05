@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +9,24 @@
     
     <h3>Iniciar sesión</h3>
 
-    <form action="login.php" method="POST">
+    <p>Esta pantalla es solo una maqueta. El proyecto no incluye un servidor para autenticar usuarios.</p>
+    <form id="form-login">
         <label for="username">Usuario:</label>
         <input type="text" id="username" name="username" required><br><br>
 
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required><br><br>
 
-        <input type="submit" value="Iniciar sesión">
+        <button type="submit">Iniciar sesión</button>
+        <p id="estado-login" role="status" aria-live="polite"></p>
 
     </form>
 
+    <script>
+    document.getElementById("form-login").addEventListener("submit", evento => {
+        evento.preventDefault();
+        document.getElementById("estado-login").textContent = "El inicio de sesión requiere un servidor y aún no está habilitado.";
+    });
+    </script>
 </body>
 </html>

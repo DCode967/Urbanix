@@ -15,6 +15,9 @@
     --color-placeholder: #b0b0b0;
 
     --color-acento: #ff6b00;
+    --color-principal: #ff6b00;
+    --color-gris: #b0b0b0;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.2);
 
 
     /* =========================
@@ -536,7 +539,7 @@ nav a:hover{
 }
 
 
-.tarjeta button {
+.tarjeta .button {
     margin-top: var(--espacio-md);
 }
 
@@ -713,7 +716,7 @@ div.galerry-item div.desc {
    }
 
    .beneficio{
-    background-color: linear-gradient(135deg, var(--color-acento) 0% var (--color-acento-claro) 100%);
+     background: linear-gradient(135deg, var(--color-acento) 0%, #e55f00 100%);
     color: var(--color-blanco);
     padding: var(--espacio-lg) var(--espacio-md)    ;
     border-radius: var(--radio-redondo);
@@ -742,25 +745,30 @@ div.galerry-item div.desc {
    BOTONES
    ========================= */
 
-button {
+button,
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--color-negro);
-
     color: var(--color-blanco);
-
     border: none;
-
     padding: var(--espacio-sm) var(--espacio-lg);
-
     border-radius: var(--radio-redondo);
-
     cursor: pointer;
-
+    text-decoration: none;
     transition: var(--transicion-boton);
 }
 
-
-button:hover {
+button:hover,
+.button:hover {
     background-color: var(--color-acento);
+}
+
+button:focus-visible,
+.button:focus-visible {
+    outline: 3px solid var(--color-blanco);
+    outline-offset: 3px;
 }
 
 .testimonios {
@@ -865,13 +873,7 @@ footer a {
     transition: var(--transicion);
 }
 
-footer a {
-    color: var(--footer-texto-secundario);
 
-    text-decoration: none;
-
-    transition: var(--transicion);
-}
 
 .footer-redes {
     display: flex;
@@ -883,7 +885,9 @@ footer a {
     gap: var(--espacio-md);
 
     margin: var(--espacio-md) 0;
-}.footer-redes a {
+}
+
+.footer-redes a {
     color: var(--footer-texto-secundario);
 
     text-decoration: none;
@@ -1632,5 +1636,401 @@ body.carrito-bloqueado {
     .logo {
         width: 90px;
         height: 90px;
+    }
+}
+
+/* ==================================================
+   RESPONSIVE GENERAL
+   ================================================== */
+
+/* Evita que cualquier elemento provoque scroll horizontal */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* ==================================================
+   TABLETS Y PANTALLAS PEQUEÑAS
+   ================================================== */
+
+@media (max-width: 768px) {
+
+    /* ------------------------------
+       HEADER
+       ------------------------------ */
+
+    .header {
+        width: 100%;
+        min-height: auto;
+        padding: 20px 15px;
+        background-size: cover;
+    }
+
+    .header-contenido {
+        width: 100%;
+        min-height: auto;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 20px;
+    }
+
+
+    /* ------------------------------
+       MARCA
+       ------------------------------ */
+
+    .marca {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 12px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+        flex-shrink: 0;
+    }
+
+    .marca h1 {
+        font-size: clamp(1.6rem, 7vw, 2rem);
+        margin: 0;
+    }
+
+
+    /* ------------------------------
+       BUSCADOR
+       ------------------------------ */
+
+    .buscador {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        gap: 8px;
+    }
+
+    .buscador input {
+        width: 100%;
+        max-width: 350px;
+        min-width: 0;
+    }
+
+
+    /* ------------------------------
+       ACCIONES
+       ------------------------------ */
+
+    .acciones {
+        width: 100%;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+    .acciones a {
+        white-space: nowrap;
+    }
+
+
+    /* ------------------------------
+       NAVBAR
+       ------------------------------ */
+
+    nav {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    nav ul {
+        width: 100%;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 15px;
+
+        margin: 0;
+        padding: 15px 10px;
+    }
+
+    nav li {
+        margin: 0;
+    }
+
+    nav a {
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+
+
+    /* ------------------------------
+       GALERÍA
+       ------------------------------ */
+
+    .galeria {
+        width: 100%;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 15px;
+
+        padding: 15px;
+    }
+
+
+    /* ------------------------------
+       TARJETAS
+       ------------------------------ */
+
+    .tarjeta {
+        width: 100%;
+        max-width: 320px;
+    }
+
+
+    /* ------------------------------
+       BENEFICIOS
+       ------------------------------ */
+
+    .beneficios {
+        width: 100%;
+        padding: 15px;
+
+        grid-template-columns: 1fr;
+    }
+
+
+    /* ------------------------------
+       BANNER
+       ------------------------------ */
+
+    .banner-oferta {
+        width: calc(100% - 30px);
+        margin: 15px auto;
+
+        padding: 25px 15px;
+    }
+
+    .banner-oferta h2 {
+        font-size: clamp(24px, 7vw, 36px);
+    }
+
+    .banner-oferta p {
+        font-size: 16px;
+    }
+
+
+    /* ------------------------------
+       TESTIMONIOS
+       ------------------------------ */
+
+    .testimonios {
+        width: calc(100% - 30px);
+        padding: 20px 15px;
+    }
+
+
+    /* ------------------------------
+       FOOTER
+       ------------------------------ */
+
+    footer {
+        padding: 30px 15px 20px;
+    }
+
+}
+
+
+/* ==================================================
+   CELULARES
+   ================================================== */
+
+@media (max-width: 480px) {
+
+    /* HEADER */
+
+    .header {
+        padding: 15px 10px;
+    }
+
+    .header-contenido {
+        gap: 15px;
+    }
+
+
+    /* MARCA */
+
+    .marca {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .marca h1 {
+        font-size: 1.8rem;
+    }
+
+
+    /* BUSCADOR */
+
+    .buscador {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .buscador input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .buscador .button {
+        width: auto;
+        min-width: 100px;
+    }
+
+
+    /* ACCIONES */
+
+    .acciones {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .acciones a {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+
+    /* NAV */
+
+    nav ul {
+        gap: 8px;
+        padding: 12px 5px;
+    }
+
+    nav a {
+        font-size: 0.85rem;
+    }
+
+
+    /* GALERÍA */
+
+    .galeria {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+
+    /* TARJETAS */
+
+    .tarjeta {
+        width: 100%;
+        max-width: 320px;
+    }
+
+
+    /* BENEFICIOS */
+
+    .beneficios {
+        padding: 10px;
+    }
+
+
+    /* PRODUCTOS */
+
+    .producto img {
+        width: min(180px, 100%);
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+
+    /* TESTIMONIOS */
+
+    .testimonios {
+        width: calc(100% - 20px);
+        padding: 20px 10px;
+    }
+
+
+    /* FOOTER */
+
+    footer {
+        padding: 25px 10px 15px;
+    }
+
+    .footer-redes {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ==================================================
+   CELULARES MUY PEQUEÑOS
+   ================================================== */
+
+@media (max-width: 360px) {
+
+    .marca h1 {
+        font-size: 1.5rem;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+    }
+
+    nav ul {
+        gap: 6px;
+    }
+
+    nav a {
+        font-size: 0.78rem;
+    }
+
+    .acciones a {
+        font-size: 0.8rem;
+        padding: 7px 8px;
     }
 }

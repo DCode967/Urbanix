@@ -40,19 +40,31 @@ const finalizarCompra = document.getElementById("finalizar-compra");
    ================================================== */
 
 function cargarCarrito() {
-
-    const carritoGuardado = localStorage.getItem(
-        "urbanix-carrito"
+    const productosDisponibles = new Map(
+        Array.from(document.querySelectorAll(".producto[data-id]"), elemento => [
+            elemento.dataset.id,
+            {
+                id: elemento.dataset.id,
+                nombre: elemento.dataset.nombre,
+                precio: Number(elemento.dataset.precio),
+                imagen: elemento.dataset.imagen
+            }
+        ])
     );
 
-    if (carritoGuardado) {
-
-        carrito = JSON.parse(carritoGuardado);
-
-    } else {
-
+    try {
+        const guardado = JSON.parse(localStorage.getItem("urbanix-carrito") || "[]");
+        carrito = Array.isArray(guardado)
+            ? guardado.flatMap(item => {
+                const producto = productosDisponibles.get(String(item?.id));
+                const cantidad = Number(item?.cantidad);
+                if (!producto || !Number.isSafeInteger(cantidad) || cantidad < 1) return [];
+                return [{ ...producto, cantidad: Math.min(cantidad, 99) }];
+            })
+            : [];
+    } catch {
         carrito = [];
-
+        localStorage.removeItem("urbanix-carrito");
     }
 
     actualizarCarrito();
