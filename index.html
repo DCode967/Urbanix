@@ -40,8 +40,9 @@
             placeholder="Buscar productos..."
             aria-label="Buscar productos"
         >
+        <span id="mensaje-busqueda" role="status" aria-live="polite"></span>
 
-        <button type="button">Buscar</button>
+        <button type="button" id="bt-b">Buscar</button>
 
     </div>
 
@@ -225,7 +226,12 @@
 
             
 
-            <article class="producto" data-id="4" data-nombre="Zapatillas deportivas" data-precio="120000" data-imagen="./imagenes/assest/zapatos.jpg">
+            <article 
+            class="producto"
+            data-id="4" 
+            data-nombre="Zapatillas deportivas"
+            data-precio="120000" 
+            data-imagen="./imagenes/assest/zapatos.jpg">
 
                     <img src="./imagenes/assest/zapatos.jpg" alt="Producto">
 
@@ -429,5 +435,6 @@ document.getElementById("form-opinion").addEventListener("submit", evento => {
     evento.currentTarget.reset();
 });
 </script>
+<script src="productos.js"></script>
 </body>
 </html>

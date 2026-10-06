@@ -1,0 +1,25 @@
+{
+  "name": "proyecto_jc",
+  "version": "1.0.0",
+  "description": "URBANIX\r TECNOLOGIAS USADAS:\r -HTML\r -CSS\r -JAVASCRIPT\r -Node.js - Express\r Tienda online basica para proyecto",
+  "main": "carrito.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DCode967/Proyecto_pag.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DCode967/Proyecto_pag/issues"
+  },
+  "homepage": "https://github.com/DCode967/Proyecto_pag#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
