@@ -2,10 +2,10 @@
   "name": "proyecto_jc",
   "version": "1.0.0",
   "description": "URBANIX\r TECNOLOGIAS USADAS:\r -HTML\r -CSS\r -JAVASCRIPT\r -Node.js - Express\r Tienda online basica para proyecto",
-  "main": "carrito.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/DCode967/Proyecto_pag#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^18.0.7",
+    "express": "^5.2.1",
+    "mongoose": "^9.11.2"
   }
 }

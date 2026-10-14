@@ -1513,138 +1513,116 @@ body.carrito-bloqueado {
 }
 
 
-/* ==================================================
-   RESPONSIVE - TABLET
-   ================================================== */
+/*===================================================
+RESPOSIVE DE LA PAGINA DE INISIO DE SESION
+=====================================================*/
 
-@media (max-width: 600px) {
+/* =========================
+   PÁGINA DE INICIO DE SESIÓN
+   ========================= */
 
-    .panel-carrito {
+body:has(#form-login) {
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-fondo-body);
+    color: var(--color-blanco);
+    font-family: var(--fuente-principal);
+}
 
-        width: 100%;
+body:has(#form-login) h3 {
+    margin: 0 0 var(--espacio-sm);
+    color: var(--color-blanco);
+    font-size: 1.8rem;
+    text-align: center;
+}
 
-    }
+body:has(#form-login) > p {
+    max-width: 380px;
+    margin: 0 0 var(--espacio-lg);
+    color: var(--color-gris);
+    line-height: 1.5;
+    text-align: center;
+}
 
+#form-login {
+    width: min(100%, 380px);
+    box-sizing: border-box;
+    padding: 28px;
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+    border-radius: var(--radio-xl);
+    background: var(--color-fondo-tarjeta);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+#form-login label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--color-blanco);
+    font-weight: bold;
+}
+
+#form-login input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: var(--espacio-md);
+    padding: 12px;
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+    border-radius: var(--radio-sm);
+    outline: none;
+    background: var(--color-fondo-logo);
+    color: var(--color-blanco);
+    font: inherit;
+    transition: border-color var(--transicion);
+}
+
+#form-login input:focus {
+    border-color: var(--color-acento);
+}
+
+#form-login button {
+    width: 100%;
+    margin-top: var(--espacio-xs);
+    padding: 12px 16px;
+    border: 0;
+    border-radius: var(--radio-sm);
+    background: var(--color-principal);
+    color: var(--color-blanco);
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transicion-boton);
+}
+
+#form-login button:hover {
+    background: var(--color-acento);
+}
+
+#form-login button:focus-visible {
+    outline: 3px solid var(--color-blanco);
+    outline-offset: 3px;
+}
+
+#estado-login {
+    margin: var(--espacio-md) 0 0;
+    color: var(--color-gris);
+    line-height: 1.5;
 }
 
 
 /* ==================================================
-   RESPONSIVE - CELULAR
+   RESPONSIVE
+   Escritorio, portátiles, tabletas y móviles
    ================================================== */
 
-@media (max-width: 400px) {
-
-    .item-carrito {
-
-        grid-template-columns:
-            60px 1fr 30px;
-
-        gap: 8px;
-
-    }
-
-
-    .item-carrito-imagen {
-
-        width: 60px;
-
-        height: 60px;
-
-    }
-
-
-    .item-carrito-info h3 {
-
-        font-size: 0.85rem;
-
-    }
-
-
-    .item-precio {
-
-        font-size: 0.8rem;
-
-    }
-
-
-    .carrito-header {
-
-        padding: 15px;
-
-    }
-
-
-    .carrito-footer {
-
-        padding: 15px;
-
-    }
-
-}
-
-@media (max-width: 1024px) {
-    .galeria {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--gap-galeria);
-        padding: var(--espacio-lg);
-    }
-
-}
-
-@media (max-width: 400px) {
-    .galeria {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .tarjeta {
-        width: 90%;
-        max-width: 320px;
-    }
-
-    .buscador input {
-        width: 100%;
-        max-width: 350px;
-        box-sizing: border-box;
-    }
-
-    .acciones {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .header{
-        min-height: 300px;
-        padding: 15px;
-        background-size: cover;
-    }
-
-        h1 {
-        font-size: 28px;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    .logo {
-        width: 90px;
-        height: 90px;
-    }
-}
-
-/* ==================================================
-   RESPONSIVE GENERAL
-   ================================================== */
-
-/* Evita que cualquier elemento provoque scroll horizontal */
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -1653,7 +1631,6 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding: 0;
     overflow-x: hidden;
 }
 
@@ -1661,376 +1638,377 @@ img {
     max-width: 100%;
 }
 
+/* Login: base adaptable a escritorio y pantallas pequeñas */
+body:has(#form-login) {
+    min-height: 100vh;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-fondo-body);
+    color: var(--color-blanco);
+}
 
-/* ==================================================
-   TABLETS Y PANTALLAS PEQUEÑAS
-   ================================================== */
+body:has(#form-login) h3 {
+    margin: 0 0 var(--espacio-sm);
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+}
 
+body:has(#form-login) > p {
+    width: min(100%, 420px);
+    margin: 0 0 var(--espacio-lg);
+    color: var(--color-gris);
+    line-height: 1.5;
+    text-align: center;
+}
+
+#form-login {
+    width: min(100%, 400px);
+    padding: clamp(18px, 5vw, 28px);
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+    border-radius: var(--radio-xl);
+    background: var(--color-fondo-tarjeta);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+#form-login label {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--color-blanco);
+    font-weight: bold;
+}
+
+#form-login input {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin: 0 0 var(--espacio-md);
+    padding: 10px 12px;
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+    border-radius: var(--radio-sm);
+    outline: none;
+    background: var(--color-fondo-logo);
+    color: var(--color-blanco);
+    font: inherit;
+}
+
+#form-login input:focus {
+    border-color: var(--color-acento);
+}
+
+#form-login button {
+    width: 100%;
+    min-height: 46px;
+    margin-top: var(--espacio-xs);
+    background: var(--color-principal);
+    font-weight: bold;
+}
+
+#form-login button:hover {
+    background: var(--color-acento);
+}
+
+#estado-login {
+    margin: var(--espacio-md) 0 0;
+    color: var(--color-gris);
+    line-height: 1.5;
+}
+
+/* Portátiles y tabletas en horizontal */
+@media (max-width: 1024px) {
+    .header-contenido {
+        gap: 16px;
+    }
+
+    .buscador input {
+        width: min(30vw, var(--ancho-buscador));
+    }
+
+    .galeria {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .producto {
+        min-width: 0;
+    }
+
+    .producto img {
+        width: min(var(--tamano-producto), 100%);
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+
+/* Tabletas y pantallas estrechas */
 @media (max-width: 768px) {
-
-    /* ------------------------------
-       HEADER
-       ------------------------------ */
-
     .header {
-        width: 100%;
         min-height: auto;
         padding: 20px 15px;
-        background-size: cover;
     }
 
     .header-contenido {
-        width: 100%;
         min-height: auto;
-        margin: 0 auto;
-
-        display: flex;
         flex-direction: column;
-
         justify-content: center;
-        align-items: center;
-
-        gap: 20px;
+        gap: var(--espacio-lg);
     }
 
+    .marca {
+        justify-content: center;
+    }
 
-    /* ------------------------------
-       MARCA
-       ------------------------------ */
+    .buscador {
+        width: min(100%, 500px);
+    }
+
+    .buscador input {
+        flex: 1;
+        width: auto;
+        min-width: 0;
+    }
+
+    #mensaje-busqueda {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .acciones {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        gap: 12px 18px;
+        margin: 0;
+    }
+
+    .galeria {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .producto {
+        padding: 12px;
+    }
+
+    .contenedor-tarjetas {
+        gap: 12px;
+    }
+
+    .tarjeta {
+        flex: 1 1 200px;
+        max-width: 320px;
+    }
+
+    .beneficios {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .testimonios {
+        width: calc(100% - 30px);
+        padding: 22px 16px;
+    }
+
+    footer {
+        padding: 30px 16px 20px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .header {
+        padding: 16px 12px;
+    }
 
     .marca {
-        width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
+        flex-direction: row;
         gap: 12px;
     }
 
     .logo {
-        width: 90px;
-        height: 90px;
-        flex-shrink: 0;
+        width: 68px;
+        height: 68px;
     }
 
     .marca h1 {
-        font-size: clamp(1.6rem, 7vw, 2rem);
-        margin: 0;
+        font-size: 1.7rem;
     }
 
-
-    /* ------------------------------
-       BUSCADOR
-       ------------------------------ */
-
     .buscador {
-        width: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         gap: 8px;
     }
 
     .buscador input {
         width: 100%;
-        max-width: 350px;
-        min-width: 0;
     }
 
+    #bt-b {
+        min-height: 42px;
+        padding: 8px 12px;
+    }
 
-    /* ------------------------------
-       ACCIONES
-       ------------------------------ */
+    #mensaje-busqueda {
+        grid-column: 1 / -1;
+    }
 
     .acciones {
-        width: 100%;
-
-        display: flex;
-        flex-wrap: wrap;
-
-        justify-content: center;
-        align-items: center;
-
-        gap: 10px;
-    }
-
-    .acciones a {
-        white-space: nowrap;
-    }
-
-
-    /* ------------------------------
-       NAVBAR
-       ------------------------------ */
-
-    nav {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    nav ul {
-        width: 100%;
-
-        display: flex;
-        flex-wrap: wrap;
-
-        justify-content: center;
-        align-items: center;
-
-        gap: 15px;
-
-        margin: 0;
-        padding: 15px 10px;
-    }
-
-    nav li {
-        margin: 0;
-    }
-
-    nav a {
-        font-size: 0.95rem;
-        white-space: nowrap;
-    }
-
-
-    /* ------------------------------
-       GALERÍA
-       ------------------------------ */
-
-    .galeria {
-        width: 100%;
-
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 15px;
-
-        padding: 15px;
-    }
-
-
-    /* ------------------------------
-       TARJETAS
-       ------------------------------ */
-
-    .tarjeta {
-        width: 100%;
-        max-width: 320px;
-    }
-
-
-    /* ------------------------------
-       BENEFICIOS
-       ------------------------------ */
-
-    .beneficios {
-        width: 100%;
-        padding: 15px;
-
-        grid-template-columns: 1fr;
-    }
-
-
-    /* ------------------------------
-       BANNER
-       ------------------------------ */
-
-    .banner-oferta {
-        width: calc(100% - 30px);
-        margin: 15px auto;
-
-        padding: 25px 15px;
-    }
-
-    .banner-oferta h2 {
-        font-size: clamp(24px, 7vw, 36px);
-    }
-
-    .banner-oferta p {
-        font-size: 16px;
-    }
-
-
-    /* ------------------------------
-       TESTIMONIOS
-       ------------------------------ */
-
-    .testimonios {
-        width: calc(100% - 30px);
-        padding: 20px 15px;
-    }
-
-
-    /* ------------------------------
-       FOOTER
-       ------------------------------ */
-
-    footer {
-        padding: 30px 15px 20px;
-    }
-
-}
-
-
-/* ==================================================
-   CELULARES
-   ================================================== */
-
-@media (max-width: 480px) {
-
-    /* HEADER */
-
-    .header {
-        padding: 15px 10px;
-    }
-
-    .header-contenido {
-        gap: 15px;
-    }
-
-
-    /* MARCA */
-
-    .marca {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .logo {
-        width: 80px;
-        height: 80px;
-    }
-
-    .marca h1 {
-        font-size: 1.8rem;
-    }
-
-
-    /* BUSCADOR */
-
-    .buscador {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .buscador input {
-        width: 100%;
-        max-width: none;
-    }
-
-    .buscador .button {
-        width: auto;
-        min-width: 100px;
-    }
-
-
-    /* ACCIONES */
-
-    .acciones {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-
-    .acciones a {
-        padding: 8px 10px;
-        font-size: 0.9rem;
-    }
-
-
-    /* NAV */
-
-    nav ul {
         gap: 8px;
-        padding: 12px 5px;
+    }
+
+    nav ul {
+        gap: 8px 12px;
+        padding: 12px 8px;
     }
 
     nav a {
         font-size: 0.85rem;
     }
 
-
-    /* GALERÍA */
-
-    .galeria {
-        grid-template-columns: 1fr;
-        padding: 10px;
+    main > section {
+        padding-right: 12px;
+        padding-left: 12px;
     }
 
+    .galeria {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding: 10px 0;
+    }
 
-    /* TARJETAS */
+    .producto {
+        width: 100%;
+        padding: 16px 12px;
+        border-radius: var(--radio-md);
+        background: var(--color-fondo-tarjeta);
+    }
+
+    .producto img {
+        width: min(220px, 100%);
+    }
+
+    .producto .button {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .contenedor-tarjetas {
+        flex-direction: column;
+        align-items: center;
+    }
 
     .tarjeta {
         width: 100%;
-        max-width: 320px;
+        max-width: 340px;
     }
 
-
-    /* BENEFICIOS */
-
     .beneficios {
+        grid-template-columns: minmax(0, 1fr);
         padding: 10px;
     }
 
-
-    /* PRODUCTOS */
-
-    .producto img {
-        width: min(180px, 100%);
-        height: auto;
-        aspect-ratio: 1 / 1;
+    .banner-oferta {
+        width: 100%;
+        min-height: 180px;
+        padding: 20px 12px;
     }
 
-
-    /* TESTIMONIOS */
+    .banner-oferta h2 {
+        font-size: clamp(1.4rem, 7vw, 2rem);
+    }
 
     .testimonios {
-        width: calc(100% - 20px);
-        padding: 20px 10px;
+        width: 100%;
+        padding: 20px 12px;
     }
 
-
-    /* FOOTER */
-
-    footer {
-        padding: 25px 10px 15px;
+    .footer-enlaces {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
     }
 
     .footer-redes {
         flex-wrap: wrap;
     }
+
+    .panel-carrito {
+        width: 100%;
+    }
+
+    /* Formulario de inicio de sesión en móvil */
+    body:has(#form-login) {
+        justify-content: flex-start;
+        padding: max(24px, env(safe-area-inset-top)) 14px 24px;
+    }
+
+    #form-login {
+        width: 100%;
+        max-width: 400px;
+    }
 }
 
-
-/* ==================================================
-   CELULARES MUY PEQUEÑOS
-   ================================================== */
-
+/* Celulares muy estrechos */
 @media (max-width: 360px) {
+    .marca {
+        flex-direction: column;
+        text-align: center;
+    }
 
     .marca h1 {
         font-size: 1.5rem;
     }
 
     .logo {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .buscador {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #bt-b {
+        width: 100%;
+    }
+
+    .acciones {
+        flex-direction: column;
+    }
+
+    .acciones a,
+    .acciones button {
+        width: 100%;
+        text-align: center;
     }
 
     nav ul {
-        gap: 6px;
+        gap: 8px;
     }
 
     nav a {
-        font-size: 0.78rem;
+        font-size: 0.8rem;
     }
 
-    .acciones a {
-        font-size: 0.8rem;
-        padding: 7px 8px;
+    .item-carrito {
+        grid-template-columns: 52px minmax(0, 1fr) 30px;
+        gap: 8px;
+    }
+
+    .item-carrito-imagen {
+        width: 52px;
+        height: 52px;
+    }
+
+    .carrito-header,
+    .carrito-footer {
+        padding: 12px;
     }
 }

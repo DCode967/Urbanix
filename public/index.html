@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbanix</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -427,14 +427,9 @@
 
 </aside>
 
-<script src="carrito.js"></script>
-<script>
-document.getElementById("form-opinion").addEventListener("submit", evento => {
-    evento.preventDefault();
-    document.getElementById("estado-opinion").textContent = "Gracias por tu opinión. Este formulario aún no está conectado a un servidor.";
-    evento.currentTarget.reset();
-});
-</script>
-<script src="productos.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/opiniones.js"></script>
+<script src="js/productos.js"></script>
 </body>
 </html>
+
