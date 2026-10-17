@@ -6,13 +6,15 @@ const express = require("express");
 
 const path = require("node:path");
 
+const authRoutes = require('./routes/auth.routes');
+
 const productosRoutes = require("./routes/productos.rutas");
 
 const app = express();
 
 app.use(express.json());
 app.use("/api/productos", productosRoutes);
-
+app.use('/api/auth', authRoutes);
 
 const publicDirectory = path.join(__dirname, "..", "public");
 const port = process.env.PORT || 3000;
