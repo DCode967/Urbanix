@@ -10,9 +10,38 @@ const authRoutes = require('./routes/auth.routes');
 
 const productosRoutes = require("./routes/productos.rutas");
 
+const session = require("express-session");
+
+const MongoStore = require("connect-mongo");
+
 const app = express();
 
 app.use(express.json());
+
+
+if (!process.env.SESSION_SECRET) {
+    throw new Error("Falta SESSION_SECRET en el archivo .env");
+}
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        collectionName: "sessions"
+    }),
+    cookie: {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
+
+
+
 app.use("/api/productos", productosRoutes);
 app.use('/api/auth', authRoutes);
 

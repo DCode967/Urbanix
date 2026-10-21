@@ -1,5 +1,5 @@
 const User = require("../models/users");
-const { createHash } = require("../utils/password");
+const { createHash, verifyPassword } = require("../utils/password");
 
 async function userRegister(req, res) {
     const { nombre, correo, password } = req.body || {};
@@ -30,7 +30,7 @@ async function userRegister(req, res) {
         return res.status(400).json({
             message: "La contraseña debe tener entre 8 y 128 caracteres."
         });
-    }
+    }  
 
     try {
         const passwordHash = await createHash(password);
@@ -59,4 +59,108 @@ async function userRegister(req, res) {
     }
 }
 
-module.exports = { userRegister };
+async function userLogin(req, res) {
+    const { correo, password } = req.body || {};
+
+    if (
+        typeof correo !== "string" ||
+        typeof password !== "string" ||
+        !correo.trim() ||
+        !password ||
+        password.length > 128
+    ) {
+        return res.status(400).json({message: "Datos de acceso inválidos."})
+    }
+
+    const correoLimpio = correo.trim().toLowerCase();
+
+    try  {
+        const user = await User.findOne({
+            correo: correoLimpio,
+            activo: true
+        });
+
+        if (!user || !(await verifyPassword(password, user.passwordHash))) {
+            return res.status(401).json({
+                message: "Correo o contraseña incorrectos."
+            });
+        }
+
+        
+
+        await new Promise((resolve, reject) => {
+            req.session.regenerate(error => {
+                if (error) reject(error);
+                else resolve();
+            });
+        });
+
+        req.session.userId = user._id.toString();
+
+        await new Promise((resolve, reject)  => {
+            req.session.save(error => {
+                if (error) reject(error);
+                else resolve();
+            });
+        });
+
+        return res.status(200).json({
+            message: "Inicio de sesión correctos",
+
+            user: {
+            nombre: user.nombre,
+            correo: user.correo,
+            rol: user.rol
+            }
+            
+        });
+    } catch (error) {
+        console.error("Error al iniciar sesión: ", error.message);
+        return res.status(500).json({
+            message: "No se pudo iniciar sesión."
+        });
+    }
+
+}
+
+
+async function userMe(req, res) {
+    if (!req.session.userId) {
+        return res.status(401).json({
+            message: "No hay una sesion activa"
+        });
+    }
+
+    const userId = req.session.userId
+
+    try { 
+        
+        const buscadorUsuario = await User.findById(userId)
+        .select("nombre correo rol activo")
+        .exec();
+
+        if (buscadorUsuario === null || !buscadorUsuario.activo) {
+            return res.status(401).json({message: "El usuario no esta activo"})
+           
+        } else {
+            return res.status(200).json({
+                message: "Usuario encontrado",
+
+                user:{
+                nombre: buscadorUsuario.nombre,
+                correo: buscadorUsuario.correo,
+                rol: buscadorUsuario.rol
+                }
+                
+            });
+        }
+
+    } catch (error) {
+        console.error("Error al consultar la sesión del usuario", error.message);
+        return res.status(500).json({
+            message: "No se pudo consultar sesión"
+        });
+    }
+}
+
+module.exports = { userRegister, userLogin, userMe };

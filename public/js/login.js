@@ -70,7 +70,7 @@ if (formularioLogin) {
     campoCorreo.addEventListener("input", () => limpiarErrorAlEditar(campoCorreo));
     campoContrasena.addEventListener("input", () => limpiarErrorAlEditar(campoContrasena));
 
-    formularioLogin.addEventListener("submit", evento => {
+    formularioLogin.addEventListener("submit", async evento => {
         evento.preventDefault();
         mostrarEstado("");
 
@@ -86,15 +86,35 @@ if (formularioLogin) {
         // Se toman los datos solo en memoria. No se guardan ni se imprimen.
         const datosLogin = {
             correo: campoCorreo.value.toLowerCase(),
-            contrasena: campoContrasena.value
+            password: campoContrasena.value
         };
 
-        // Se usará datosLogin cuando conectemos el formulario con el servidor.
-        void datosLogin;
 
-        mostrarEstado(
-            "Los datos tienen un formato válido, pero el inicio de sesión aún no está conectado al servidor.",
-            "info"
-        );
+
+        mostrarEstado("Iniciando sesión...", "info");
+
+        try {
+            
+            const respuesta = await fetch ("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(datosLogin)
+            });
+
+            const resultado = await respuesta.json();
+
+            if (!respuesta.ok) {
+                mostrarEstado(resultado.message, "error");
+                return;
+            }
+
+            mostrarEstado(`Bienvenido, ${resultado.user.nombre}.`, 'info');
+        } catch (error) {
+
+         mostrarEstado("No se pudo conectar con el servidor. Intentalo de nuevo.", "error");       
+
+        }
     });
 }
