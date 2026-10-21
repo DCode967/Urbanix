@@ -163,4 +163,26 @@ async function userMe(req, res) {
     }
 }
 
-module.exports = { userRegister, userLogin, userMe };
+function userLogout(req, res) {
+    req.session.destroy(error => {
+        if (error) {
+            console.error("Error al cerrar la sesión:", error.message);
+            return res.status(500).json({
+                message: "No se pudo cerrar la sesión."
+            });
+        }
+
+        res.clearCookie("connect.sid", {
+            path: "/",
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production"
+        });
+
+        return res.status(200).json({
+            message: "Sesión cerrada correctamente."
+        });
+    });
+}
+
+module.exports = { userRegister, userLogin, userMe, userLogout };

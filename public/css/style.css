@@ -760,6 +760,11 @@ button,
     transition: var(--transicion-boton);
 }
 
+/* Respeta el atributo HTML hidden aunque otros estilos definan display. */
+[hidden] {
+    display: none !important;
+}
+
 button:hover,
 .button:hover {
     background-color: var(--color-acento);
@@ -1513,108 +1518,6 @@ body.carrito-bloqueado {
 }
 
 
-/*===================================================
-RESPOSIVE DE LA PAGINA DE INISIO DE SESION
-=====================================================*/
-
-/* =========================
-   PÁGINA DE INICIO DE SESIÓN
-   ========================= */
-
-body:has(#form-login) {
-    min-height: 100vh;
-    margin: 0;
-    padding: 32px 16px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-fondo-body);
-    color: var(--color-blanco);
-    font-family: var(--fuente-principal);
-}
-
-body:has(#form-login) h3 {
-    margin: 0 0 var(--espacio-sm);
-    color: var(--color-blanco);
-    font-size: 1.8rem;
-    text-align: center;
-}
-
-body:has(#form-login) > p {
-    max-width: 380px;
-    margin: 0 0 var(--espacio-lg);
-    color: var(--color-gris);
-    line-height: 1.5;
-    text-align: center;
-}
-
-#form-login {
-    width: min(100%, 380px);
-    box-sizing: border-box;
-    padding: 28px;
-    border: var(--ancho-borde) solid var(--color-borde-logo);
-    border-radius: var(--radio-xl);
-    background: var(--color-fondo-tarjeta);
-    box-shadow: var(--sombra-tarjeta);
-}
-
-#form-login label {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--color-blanco);
-    font-weight: bold;
-}
-
-#form-login input {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: var(--espacio-md);
-    padding: 12px;
-    border: var(--ancho-borde) solid var(--color-borde-logo);
-    border-radius: var(--radio-sm);
-    outline: none;
-    background: var(--color-fondo-logo);
-    color: var(--color-blanco);
-    font: inherit;
-    transition: border-color var(--transicion);
-}
-
-#form-login input:focus {
-    border-color: var(--color-acento);
-}
-
-#form-login button {
-    width: 100%;
-    margin-top: var(--espacio-xs);
-    padding: 12px 16px;
-    border: 0;
-    border-radius: var(--radio-sm);
-    background: var(--color-principal);
-    color: var(--color-blanco);
-    font: inherit;
-    font-weight: bold;
-    cursor: pointer;
-    transition: var(--transicion-boton);
-}
-
-#form-login button:hover {
-    background: var(--color-acento);
-}
-
-#form-login button:focus-visible {
-    outline: 3px solid var(--color-blanco);
-    outline-offset: 3px;
-}
-
-#estado-login {
-    margin: var(--espacio-md) 0 0;
-    color: var(--color-gris);
-    line-height: 1.5;
-}
-
-
 /* ==================================================
    RESPONSIVE
    Escritorio, portátiles, tabletas y móviles
@@ -1638,8 +1541,9 @@ img {
     max-width: 100%;
 }
 
-/* Login: base adaptable a escritorio y pantallas pequeñas */
-body:has(#form-login) {
+/* Formularios de autenticación: inicio de sesión y registro */
+body:has(#form-login),
+body:has(#form-register) {
     min-height: 100vh;
     padding: 32px 16px;
     display: flex;
@@ -1650,13 +1554,15 @@ body:has(#form-login) {
     color: var(--color-blanco);
 }
 
-body:has(#form-login) h3 {
+body:has(#form-login) h3,
+body:has(#form-register) h3 {
     margin: 0 0 var(--espacio-sm);
     text-align: center;
     font-size: clamp(1.5rem, 4vw, 1.8rem);
 }
 
-body:has(#form-login) > p {
+body:has(#form-login) > p,
+body:has(#form-register) > p {
     width: min(100%, 420px);
     margin: 0 0 var(--espacio-lg);
     color: var(--color-gris);
@@ -1664,7 +1570,8 @@ body:has(#form-login) > p {
     text-align: center;
 }
 
-#form-login {
+#form-login,
+#form-register {
     width: min(100%, 400px);
     padding: clamp(18px, 5vw, 28px);
     border: var(--ancho-borde) solid var(--color-borde-logo);
@@ -1673,14 +1580,16 @@ body:has(#form-login) > p {
     box-shadow: var(--sombra-tarjeta);
 }
 
-#form-login label {
+#form-login label,
+#form-register label {
     display: block;
     margin: 0 0 6px;
     color: var(--color-blanco);
     font-weight: bold;
 }
 
-#form-login input {
+#form-login input,
+#form-register input {
     display: block;
     width: 100%;
     min-height: 44px;
@@ -1694,11 +1603,13 @@ body:has(#form-login) > p {
     font: inherit;
 }
 
-#form-login input:focus {
+#form-login input:focus,
+#form-register input:focus {
     border-color: var(--color-acento);
 }
 
-#form-login button {
+#form-login button,
+#form-register button {
     width: 100%;
     min-height: 46px;
     margin-top: var(--espacio-xs);
@@ -1706,14 +1617,111 @@ body:has(#form-login) > p {
     font-weight: bold;
 }
 
-#form-login button:hover {
+#form-login button:hover,
+#form-register button:hover {
     background: var(--color-acento);
 }
 
-#estado-login {
+#estado-login,
+#estado-registro {
     margin: var(--espacio-md) 0 0;
     color: var(--color-gris);
     line-height: 1.5;
+}
+
+/* Apartado de cuenta */
+.boton-cuenta {
+    background: var(--color-fondo-logo);
+    color: var(--color-blanco);
+}
+
+.boton-cuenta:hover {
+    background: var(--color-acento);
+}
+
+.panel-cuenta {
+    width: min(calc(100% - 32px), 720px);
+    margin: var(--espacio-lg) auto;
+    padding: clamp(20px, 4vw, 32px);
+    border: var(--ancho-borde) solid var(--color-borde-logo);
+    border-radius: var(--radio-xl);
+    background: var(--color-fondo-tarjeta);
+    color: var(--color-blanco);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.panel-cuenta-cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--espacio-md);
+    margin-bottom: var(--espacio-lg);
+}
+
+.etiqueta-cuenta {
+    margin: 0 0 4px;
+    color: var(--color-acento);
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.panel-cuenta h2 {
+    margin: 0;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+}
+
+.boton-cerrar-cuenta {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 4px;
+    font-size: 1.5rem;
+}
+
+.boton-cerrar-sesion {
+    width: 100%;
+    min-height: 46px;
+    margin-top: var(--espacio-lg);
+    background: var(--color-acento);
+    font-weight: bold;
+}
+
+.boton-cerrar-sesion:hover {
+    background: #e55f00;
+}
+
+#estado-cuenta {
+    margin: var(--espacio-md) 0 0;
+    color: var(--color-gris);
+    line-height: 1.5;
+}
+
+.datos-cuenta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-md);
+    margin: 0;
+}
+
+.datos-cuenta div {
+    min-width: 0;
+    padding: var(--espacio-md);
+    border: 1px solid var(--color-borde-logo);
+    border-radius: var(--radio-md);
+    background: var(--color-fondo-logo);
+}
+
+.datos-cuenta dt {
+    margin-bottom: 6px;
+    color: var(--color-gris);
+    font-size: 0.9rem;
+}
+
+.datos-cuenta dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-weight: bold;
 }
 
 /* Portátiles y tabletas en horizontal */
@@ -1943,15 +1951,21 @@ body:has(#form-login) > p {
         width: 100%;
     }
 
-    /* Formulario de inicio de sesión en móvil */
-    body:has(#form-login) {
+    /* Formularios de autenticación en móvil */
+    body:has(#form-login),
+    body:has(#form-register) {
         justify-content: flex-start;
         padding: max(24px, env(safe-area-inset-top)) 14px 24px;
     }
 
-    #form-login {
+    #form-login,
+    #form-register {
         width: 100%;
         max-width: 400px;
+    }
+
+    .datos-cuenta {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
