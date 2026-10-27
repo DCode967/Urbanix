@@ -17,7 +17,7 @@ Tienda en línea básica desarrollada con HTML, CSS, JavaScript, Node.js, Expres
 - `src/controllers/`: lógica de la API.
 - `src/routes/`: rutas de productos y autenticación.
 - `src/utils/password.js`: generación y verificación de hashes de contraseña con `scrypt`.
-- `src/middleware/`: middleware para autenticar y proteger rutas; aún pendiente.
+- `src/middleware/auth.middleware.js`: comprueba sesiones activas con `requireAuth` y restringe el acceso por rol administrador con `requireAdmin`.
 
 ## Configuración local
 
@@ -42,11 +42,19 @@ El inicio de sesión está conectado en `POST /api/auth/login` y espera `correo`
 
 `POST /api/auth/logout` destruye la sesión guardada y expira la cookie `connect.sid`. El botón «Cerrar sesión» del panel de cuenta llama a esta ruta y recarga la página cuando el cierre se completa.
 
-`GET /api/auth/me` consulta el usuario asociado a la sesión actual y devuelve sus datos públicos. Sin una sesión válida o si la cuenta está inactiva, responde con `401`.
+`GET /api/auth/me` aplica `requireAuth` antes de devolver los datos públicos del usuario asociado a la sesión. El middleware busca al usuario en MongoDB, excluye `passwordHash` y rechaza sesiones sin usuario válido o con la cuenta inactiva mediante `401`.
+
+`requireAdmin` comprueba que el usuario autenticado tenga el rol `admin`; si no, responde con `403`. Se ejecuta después de `requireAuth` en las rutas que requieren permisos administrativos.
+
+`POST /api/productos` crea productos y requiere una sesión activa con rol `admin`. El servidor valida los campos, guarda el producto en MongoDB y devuelve el documento creado con estado `201`.
+
+`PUT /api/productos/:id` actualiza los campos de un producto existente. También requiere una sesión activa con rol `admin`; devuelve `404` si el producto no existe y `400` si el ID o los datos son inválidos.
+
+`DELETE /api/productos/:id` realiza una eliminación lógica: cambia `activo` a `false` para que el producto deje de aparecer en el catálogo, pero conserva el documento en MongoDB. Requiere una sesión activa con rol `admin`.
 
 En `public/index.html`, el carrito, el acceso a «Mi cuenta» y el panel de perfil comienzan ocultos. `public/js/sesion.js` consulta `/api/auth/me`; si hay sesión, muestra el carrito y el acceso al panel, y rellena el perfil con nombre, correo y rol. La regla `[hidden]` de `public/css/style.css` evita que los estilos generales de los botones muestren controles ocultos. Esta comprobación solo controla lo que aparece en la interfaz; las operaciones protegidas también deberán validarse en el servidor.
 
-Se comprobó localmente que el servidor arranca, que `/api/auth/me` devuelve `401` sin sesión, que un intento de inicio de sesión con credenciales inválidas devuelve `401`, que `/api/auth/logout` responde correctamente y expira la cookie, y que las páginas principales cargan. Falta comprobar un inicio de sesión válido y un registro real. Sigue pendiente el middleware de autenticación y autorización para proteger funciones de usuario y administrador.
+Se comprobó localmente que el servidor arranca, que `/api/auth/me` devuelve `401` sin sesión, que un intento de inicio de sesión con credenciales inválidas devuelve `401`, que `/api/auth/logout` responde correctamente y expira la cookie, y que las páginas principales cargan. Falta comprobar un inicio de sesión válido y un registro real, las rutas administrativas de productos con una sesión de administrador y la interfaz administrativa.
 
 ## Ejecutar
 

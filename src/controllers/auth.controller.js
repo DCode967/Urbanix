@@ -124,43 +124,18 @@ async function userLogin(req, res) {
 }
 
 
-async function userMe(req, res) {
-    if (!req.session.userId) {
-        return res.status(401).json({
-            message: "No hay una sesion activa"
-        });
-    }
+function userMe(req, res) {
 
-    const userId = req.session.userId
-
-    try { 
-        
-        const buscadorUsuario = await User.findById(userId)
-        .select("nombre correo rol activo")
-        .exec();
-
-        if (buscadorUsuario === null || !buscadorUsuario.activo) {
-            return res.status(401).json({message: "El usuario no esta activo"})
-           
-        } else {
-            return res.status(200).json({
+    res.status(200).json({
                 message: "Usuario encontrado",
 
                 user:{
-                nombre: buscadorUsuario.nombre,
-                correo: buscadorUsuario.correo,
-                rol: buscadorUsuario.rol
+                nombre: req.user.nombre,
+                correo: req.user.correo,
+                rol: req.user.rol
                 }
-                
             });
-        }
-
-    } catch (error) {
-        console.error("Error al consultar la sesión del usuario", error.message);
-        return res.status(500).json({
-            message: "No se pudo consultar sesión"
-        });
-    }
+            
 }
 
 function userLogout(req, res) {
