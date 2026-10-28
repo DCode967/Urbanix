@@ -1,4 +1,4 @@
-function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta }) {
+function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario }) {
   return (
     <header id="inicio" className="header">
       <div className="header-contenido">
@@ -16,8 +16,10 @@ function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta }) {
         </div>
 
         <div className="acciones">
-          <a id="enlace-login" href="login.html">Iniciar sesión</a>
-          <button type="button" id="abrir-mi-cuenta" className="boton-cuenta" aria-controls="mi-cuenta" aria-expanded="false" onClick={onAbrirCuenta}>Mi cuenta</button>
+          {!usuario && <a id="enlace-login" href="#/login">Iniciar sesión</a>}
+          {usuario && (
+            <button type="button" id="abrir-mi-cuenta" className="boton-cuenta" aria-controls="mi-cuenta" aria-expanded="false" onClick={onAbrirCuenta}>Mi cuenta</button>
+          )}
           <button type="button" id="abrir-carrito" className="boton-carrito" onClick={onAbrirCarrito}>
             Carrito
             <span id="contador-carrito">{cantidadCarrito}</span>
