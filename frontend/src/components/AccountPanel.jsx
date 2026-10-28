@@ -1,12 +1,12 @@
-function AccountPanel() {
+function AccountPanel({ abierto, onCerrar }) {
   return (
-    <section id="mi-cuenta" className="panel-cuenta" aria-labelledby="titulo-mi-cuenta" hidden>
+    <section id="mi-cuenta" className="panel-cuenta" aria-labelledby="titulo-mi-cuenta" hidden={!abierto}>
       <div className="panel-cuenta-cabecera">
         <div>
           <p className="etiqueta-cuenta">Tu perfil</p>
           <h2 id="titulo-mi-cuenta">Mi cuenta</h2>
         </div>
-        <button type="button" id="cerrar-mi-cuenta" className="boton-cerrar-cuenta" aria-label="Cerrar Mi cuenta">×</button>
+        <button type="button" id="cerrar-mi-cuenta" className="boton-cerrar-cuenta" aria-label="Cerrar Mi cuenta" onClick={onCerrar}>×</button>
       </div>
       <dl className="datos-cuenta">
         <div>
