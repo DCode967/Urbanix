@@ -4,8 +4,6 @@ const conectarDB = require("./config/db")();
 
 const express = require("express");
 
-const path = require("node:path");
-
 const authRoutes = require('./routes/auth.routes');
 
 const productosRoutes = require("./routes/productos.rutas");
@@ -14,10 +12,16 @@ const session = require("express-session");
 
 const MongoStore = require("connect-mongo").default;
 
+const cors = require("cors");
+
 const app = express();
 
 app.use(express.json());
 
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 
 if (!process.env.SESSION_SECRET) {
     throw new Error("Falta SESSION_SECRET en el archivo .env");
@@ -39,24 +43,10 @@ app.use(session({
     }
 }));
 
-
-
-
 app.use("/api/productos", productosRoutes);
 app.use('/api/auth', authRoutes);
 
-const publicDirectory = path.join(__dirname, "..", "public");
 const port = process.env.PORT || 3000;
-
-app.use(express.static(publicDirectory));
-
-app.get("/", (_request, response) => {
-    response.sendFile(path.join(publicDirectory, "index.html"));
-});
-
-app.get("/login", (_request, response) => {
-    response.sendFile(path.join(publicDirectory, "login.html"));
-});
 
 async function startServer() {
     try {

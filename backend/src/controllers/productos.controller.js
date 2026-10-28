@@ -204,4 +204,17 @@ async function eliminarProducto(req, res) {
 
 }
 
-module.exports = {  listarProductos, crearProducto, actualizarProducto, eliminarProducto  }; 
+
+//LISTA DE PRODUCTOS PARA EL ADMINISTRADOR
+
+async function listarProductoAdmin(req, res) {
+    try {
+        const product = await producto.find();
+        return res.json(product);
+    } catch (error) {
+         console.error("Error al consultar productos:", error.message);
+        return res.status(500).json({error: "Error al consultar productos"});
+    }
+}
+
+module.exports = {  listarProductos, crearProducto, actualizarProducto, eliminarProducto,  listarProductoAdmin }; 
