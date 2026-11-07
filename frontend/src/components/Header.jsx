@@ -1,4 +1,4 @@
-function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario }) {
+function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario, busqueda, onCambiarBusqueda, onBuscar }) {
   return (
     <header id="inicio" className="header">
       <div className="header-contenido">
@@ -10,9 +10,9 @@ function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario }) {
         </div>
 
         <div className="buscador">
-          <input type="search" placeholder="Buscar productos..." aria-label="Buscar productos" />
+          <input type="search" placeholder="Buscar productos..." aria-label="Buscar productos" value={busqueda} onChange={(event) => onCambiarBusqueda(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') onBuscar() }} />
           <span id="mensaje-busqueda" role="status" aria-live="polite"></span>
-          <button type="button" id="bt-b">Buscar</button>
+          <button type="button" id="bt-b" onClick={onBuscar}>Buscar</button>
         </div>
 
         <div className="acciones">

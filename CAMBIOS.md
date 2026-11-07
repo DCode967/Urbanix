@@ -11,3 +11,11 @@
 | Productos | Hardcodeados en index.html | Cargados desde API con useEffect ([], cargando/error) | Ahora vienen de la base de datos vía GET /api/productos. |
 | Login/Registro/Sesión | Páginas HTML + JS vanilla | Componentes React con hash routing (#/login, #/registro) | Todo funciona dentro de la app React. |
 | Llamadas API | fetch directo en archivos JS | frontend/src/api.js con import.meta.env.VITE_API_URL | Centralizamos las llamadas al backend. |
+
+## Mejoras y tareas pendientes
+
+- El buscador filtra el catálogo por nombre, descripción y categoría; los botones de categoría aplican el filtro.
+- El asistente móvil usa los datos cargados de productos para responder sobre precio, descripción y stock. Es un asistente guiado local, no un modelo generativo. Ante consultas de envío, indica que no hay políticas verificables publicadas y pide confirmar con soporte.
+- La API permite configurar CORS por `ALLOWED_ORIGINS`, utiliza cookies seguras en producción y expone `/health`.
+- Se añadió una configuración inicial de Vercel para el frontend y Render para la API; los pasos están en el README.
+- Pendiente: cargar productos reales, publicar políticas de envío, indicar correo/teléfono de soporte, conectar cuentas/dominios de hosting y MongoDB Atlas. El carrito no procesa pagos todavía.

@@ -12,17 +12,28 @@ import CartSidebar from './components/CartSidebar'
 import Footer from './components/Footer'
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
+import StoreAssistant from './components/StoreAssistant'
 import { obtenerProductos, obtenerSesion, cerrarSesion } from './api'
 
 function App() {
   const [ruta, setRuta] = useState(window.location.hash || '#/')
-  const [carrito, setCarrito] = useState([])
+  const [carrito, setCarrito] = useState(() => {
+    try {
+      const guardado = JSON.parse(localStorage.getItem('urbanix-carrito') || '[]')
+      return Array.isArray(guardado) ? guardado : []
+    } catch {
+      localStorage.removeItem('urbanix-carrito')
+      return []
+    }
+  })
   const [carritoAbierto, setCarritoAbierto] = useState(false)
   const [cuentaAbierta, setCuentaAbierta] = useState(false)
   const [usuario, setUsuario] = useState(null)
   const [productos, setProductos] = useState([])
   const [cargandoProductos, setCargandoProductos] = useState(true)
   const [errorProductos, setErrorProductos] = useState('')
+  const [busqueda, setBusqueda] = useState('')
+  const [filtro, setFiltro] = useState('')
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -30,17 +41,6 @@ function App() {
     }
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  useEffect(() => {
-    try {
-      const guardado = JSON.parse(localStorage.getItem('urbanix-carrito') || '[]')
-      if (Array.isArray(guardado)) {
-        setCarrito(guardado)
-      }
-    } catch {
-      localStorage.removeItem('urbanix-carrito')
-    }
   }, [])
 
   useEffect(() => {
@@ -61,7 +61,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setCargandoProductos(true)
     setErrorProductos('')
     obtenerProductos()
       .then((data) => {
@@ -126,6 +125,9 @@ function App() {
   }
 
   const cantidadTotal = carrito.reduce((total, item) => total + item.cantidad, 0)
+  const productosFiltrados = productos.filter((producto) => `${producto.nombre} ${producto.descripcion} ${producto.categoria}`.toLocaleLowerCase('es').includes(filtro.trim().toLocaleLowerCase('es')))
+  const buscarProductos = () => { setFiltro(busqueda.trim()); document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }) }
+  const seleccionarCategoria = (categoria) => { setBusqueda(categoria); setFiltro(categoria); document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }) }
 
   const handleCerrarSesion = async () => {
     try {
@@ -149,6 +151,9 @@ function App() {
     <>
       <Header
         cantidadCarrito={cantidadTotal}
+        busqueda={busqueda}
+        onCambiarBusqueda={setBusqueda}
+        onBuscar={buscarProductos}
         onAbrirCarrito={() => setCarritoAbierto(true)}
         onAbrirCuenta={() => setCuentaAbierta(true)}
         usuario={usuario}
@@ -162,13 +167,14 @@ function App() {
       />
       <main>
         <Hero />
-        <Categories />
-        <ProductList productos={productos} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} />
+        <Categories onSeleccionar={seleccionarCategoria} />
+        <ProductList productos={productosFiltrados} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} filtro={filtro} onLimpiarFiltro={() => { setFiltro(''); setBusqueda('') }} />
         <Offers />
         <Benefits />
         <Testimonials />
       </main>
       <Footer />
+      <StoreAssistant productos={productos} cargando={cargandoProductos} />
       <CartSidebar
         abierto={carritoAbierto}
         onCerrar={() => setCarritoAbierto(false)}
@@ -183,3 +189,4 @@ function App() {
 }
 
 export default App
+

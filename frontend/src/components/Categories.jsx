@@ -1,20 +1,15 @@
-function Categories() {
+function Categories({ onSeleccionar }) {
+  const categorias = ['Ropa', 'Calzado', 'Accesorios']
   return (
     <section id="categorias" className="categorias">
       <h2>Categorías</h2>
       <div className="contenedor-tarjetas">
-        <article className="tarjeta">
-          <h3>Ropa</h3>
-          <button className="button">Ver más</button>
-        </article>
-        <article className="tarjeta">
-          <h3>Calzado</h3>
-          <button className="button">Ver más</button>
-        </article>
-        <article className="tarjeta">
-          <h3>Accesorios</h3>
-          <button className="button">Ver más</button>
-        </article>
+        {categorias.map((categoria) => (
+          <article className="tarjeta" key={categoria}>
+            <h3>{categoria}</h3>
+            <button type="button" className="button" onClick={() => onSeleccionar(categoria)}>Ver más</button>
+          </article>
+        ))}
       </div>
     </section>
   )
