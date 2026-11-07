@@ -72,3 +72,13 @@ export async function cerrarSesion() {
   return resultado;
 }
 
+export async function preguntarAsistente(pregunta) {
+  const respuesta = await fetch(`${API_URL}/api/asistente`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ pregunta })
+  })
+  const resultado = await respuesta.json().catch(() => ({}))
+  if (!respuesta.ok) throw new Error(resultado.message || 'Asistente no disponible')
+  return resultado.respuesta
+}
