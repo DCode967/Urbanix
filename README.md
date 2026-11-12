@@ -25,7 +25,7 @@ Tienda en línea en español. El frontend usa React y Vite; la API usa Node.js, 
 
 - El catálogo y los detalles de productos se cargan desde MongoDB por la API.
 - Buscar filtra nombre, descripción y categoría; los botones de categoría aplican un filtro.
-- El carrito se guarda en el navegador y limita las cantidades al stock publicado. El botón de finalizar compra solo informa que el pago está pendiente; no procesa pedidos ni pagos.
+- El carrito solo permite agregar productos con sesión iniciada, se guarda por cuenta en ese navegador y limita las cantidades al stock publicado. El botón de finalizar compra solo informa que el pago está pendiente; no procesa pedidos ni pagos.
 - El asistente se llama **Nix**. Usa la API Responses de OpenAI desde el backend y consulta el catálogo activo de MongoDB. Solo usa la política de envío y el contacto si se configuran. No inventa datos: cuando faltan, lo indica y pide confirmarlos. Si la API de IA no está configurada o falla, muestra una respuesta local de respaldo. La clave se guarda solo en el backend. La ruta del asistente limita cada IP a 30 consultas por minuto.
 - Para procesar pagos y pedidos falta elegir y configurar un proveedor de pago y definir el flujo de pedidos.
 - Antes de publicar, añade un canal real de soporte y políticas de envío. El asistente requiere una clave de OpenAI; sin ella, funciona el respaldo guiado. No hay credenciales de pago ni pasarela integradas.

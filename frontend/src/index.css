@@ -770,6 +770,17 @@ button:hover,
     background-color: var(--color-acento);
 }
 
+button:disabled,
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+button:disabled:hover,
+.button:disabled:hover {
+    background-color: var(--color-negro);
+}
+
 button:focus-visible,
 .button:focus-visible {
     outline: 3px solid var(--color-blanco);

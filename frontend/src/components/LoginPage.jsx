@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { iniciarSesion } from '../api'
 
-function LoginPage() {
+function LoginPage({ onLogin }) {
   const [correo, setCorreo] = useState('')
   const [password, setPassword] = useState('')
   const [estado, setEstado] = useState('')
@@ -40,6 +40,7 @@ function LoginPage() {
       const resultado = await iniciarSesion({ correo: correo.trim().toLowerCase(), password })
       setEstado(`Bienvenido, ${resultado.user.nombre}.`)
       setTipo('info')
+      onLogin?.(resultado.user)
     } catch (error) {
       setEstado(error.message || 'No se pudo conectar con el servidor. Inténtalo de nuevo.')
       setTipo('error')

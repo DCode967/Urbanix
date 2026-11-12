@@ -17,18 +17,11 @@ import { obtenerProductos, obtenerSesion, cerrarSesion } from './api'
 
 function App() {
   const [ruta, setRuta] = useState(window.location.hash || '#/')
-  const [carrito, setCarrito] = useState(() => {
-    try {
-      const guardado = JSON.parse(localStorage.getItem('urbanix-carrito') || '[]')
-      return Array.isArray(guardado) ? guardado : []
-    } catch {
-      localStorage.removeItem('urbanix-carrito')
-      return []
-    }
-  })
+  const [carrito, setCarrito] = useState([])
   const [carritoAbierto, setCarritoAbierto] = useState(false)
   const [cuentaAbierta, setCuentaAbierta] = useState(false)
   const [usuario, setUsuario] = useState(null)
+  const [sesionVerificada, setSesionVerificada] = useState(false)
   const [productos, setProductos] = useState([])
   const [cargandoProductos, setCargandoProductos] = useState(true)
   const [errorProductos, setErrorProductos] = useState('')
@@ -44,8 +37,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('urbanix-carrito', JSON.stringify(carrito))
-  }, [carrito])
+    if (!usuario || !sesionVerificada) return
+    localStorage.setItem(`urbanix-carrito-${usuario.correo}`, JSON.stringify(carrito))
+  }, [carrito, usuario, sesionVerificada])
 
   useEffect(() => {
     // cargar sesión
@@ -53,12 +47,39 @@ function App() {
       .then((resultado) => {
         if (resultado && resultado.user) {
           setUsuario(resultado.user)
+          try {
+            const guardado = JSON.parse(localStorage.getItem(`urbanix-carrito-${resultado.user.correo}`) || '[]')
+            setCarrito(Array.isArray(guardado) ? guardado : [])
+          } catch {
+            localStorage.removeItem(`urbanix-carrito-${resultado.user.correo}`)
+            setCarrito([])
+          }
+        } else {
+          setCarrito([])
         }
       })
       .catch(() => {
         setUsuario(null)
+        setCarrito([])
+      })
+      .finally(() => {
+        // Descarta el carrito anónimo de versiones anteriores.
+        localStorage.removeItem('urbanix-carrito')
+        setSesionVerificada(true)
       })
   }, [])
+
+  const handleInicioSesion = (usuarioAutenticado) => {
+    setUsuario(usuarioAutenticado)
+    try {
+      const guardado = JSON.parse(localStorage.getItem(`urbanix-carrito-${usuarioAutenticado.correo}`) || '[]')
+      setCarrito(Array.isArray(guardado) ? guardado : [])
+    } catch {
+      localStorage.removeItem(`urbanix-carrito-${usuarioAutenticado.correo}`)
+      setCarrito([])
+    }
+    window.location.hash = '#/'
+  }
 
   useEffect(() => {
     setErrorProductos('')
@@ -75,6 +96,10 @@ function App() {
   }, [])
 
   const agregarAlCarrito = (producto) => {
+    if (!usuario || !sesionVerificada) {
+      if (sesionVerificada) window.location.hash = '#/login'
+      return
+    }
     const id = producto.id || producto._id
     const stock = Number(producto.stock)
     if (stock <= 0) return
@@ -140,12 +165,13 @@ function App() {
       // ignorar
     }
     setUsuario(null)
+    setCarrito([])
     setCuentaAbierta(false)
     window.location.hash = '#/'
   }
 
   if (ruta === '#/login') {
-    return <LoginPage />
+    return <LoginPage onLogin={handleInicioSesion} />
   }
   if (ruta === '#/registro') {
     return <RegisterPage />
@@ -172,7 +198,7 @@ function App() {
       <main>
         <Hero />
         <Categories onSeleccionar={seleccionarCategoria} />
-        <ProductList productos={productosFiltrados} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} filtro={filtro} onLimpiarFiltro={() => { setFiltro(''); setBusqueda('') }} />
+        <ProductList productos={productosFiltrados} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} autenticado={Boolean(usuario)} sesionVerificada={sesionVerificada} filtro={filtro} onLimpiarFiltro={() => { setFiltro(''); setBusqueda('') }} />
         <Offers />
         <Benefits />
         <Testimonials />
