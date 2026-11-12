@@ -2039,7 +2039,7 @@ body:has(#form-register) > p {
 }
 
 /* Asistente de tienda */
-.asistente-tienda { position: fixed; z-index: 50; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: grid; justify-items: end; gap: 10px; }
+.asistente-tienda { position: fixed; z-index: 1101; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: grid; justify-items: end; gap: 10px; }
 .asistente-boton { min-height: 48px; padding: 12px 18px; border-radius: 999px; background: var(--color-principal); color: var(--color-blanco); font-weight: 700; box-shadow: 0 5px 22px #0006; }
 .asistente-panel { width: min(380px, calc(100vw - 24px)); height: min(520px, calc(100dvh - 90px)); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--color-borde-logo); border-radius: var(--radio-lg); background: var(--color-fondo-tarjeta); color: var(--color-blanco); box-shadow: 0 12px 40px #0008; }
 .asistente-panel > header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--color-fondo-logo); }
