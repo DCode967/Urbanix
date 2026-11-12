@@ -1,66 +1,93 @@
 # Urbanix
 
-Tienda en línea en español. El frontend usa React y Vite; la API usa Node.js, Express y MongoDB. Incluye catálogo, filtros, carrito local y registro/inicio de sesión. El pago aún no está implementado.
+Urbanix es una tienda web en español creada como prototipo. El frontend usa React y Vite; la API usa Node.js y Express; los productos y las sesiones se guardan en MongoDB Atlas.
 
-## Requisitos
+## Sitio publicado
 
-- Node.js 20.19+ o 22.12+ (Vite 8 requiere una de estas versiones).
-- MongoDB local para desarrollo, o una URI de MongoDB Atlas.
+- **Tienda:** <https://urbanix-yyv9.onrender.com>
+- **API:** <https://urbanix-api.onrender.com>
+- **Estado de la API:** <https://urbanix-api.onrender.com/health>
+- **Catálogo de la API:** <https://urbanix-api.onrender.com/api/productos>
+- **Rama desplegada:** `migracion-react`
+
+El sitio es público y se puede abrir desde un navegador con conexión a internet. La API gratuita de Render puede tardar alrededor de un minuto en responder después de un periodo sin actividad.
+
+## Funciones
+
+- Catálogo de productos cargado desde MongoDB Atlas; búsqueda por nombre, descripción y categoría.
+- Registro, inicio y cierre de sesión.
+- El botón del carrito y su panel solo aparecen después de confirmar una sesión activa. Para agregar productos también se requiere iniciar sesión.
+- El carrito se guarda localmente por cuenta y por navegador; las cantidades respetan el stock publicado.
+- **Nix**, asistente para preguntas sobre el catálogo y los datos de envío. Consulta la API Responses de OpenAI desde el backend y usa los productos activos de la base. Si faltan datos o falla la IA, informa que no puede confirmarlos y ofrece una respuesta de respaldo.
+
+## Límites del prototipo
+
+- El botón de finalizar compra es informativo: todavía no se crean pedidos ni se reciben pagos.
+- Nix necesita `OPENAI_API_KEY` en las variables de entorno del backend para responder con IA. Sin esa clave, usa el respaldo local.
+- Para responder con datos precisos sobre envíos y derivar al soporte, hay que configurar `SHIPPING_POLICY` y `SUPPORT_CONTACT` en Render.
+- El carrito se guarda en el navegador, no en MongoDB; no se sincroniza entre dispositivos.
+
+## Tecnologías y estructura
+
+- `frontend/`: React, Vite, componentes y estilos.
+- `backend/`: API Express, autenticación por sesión, catálogo y asistente Nix.
+- `backend/src/models/productos.js`: modelo que guarda productos en la colección `productos` (minúscula).
+- Base de datos usada en Atlas: `Urbanix` (respetar mayúsculas y minúsculas).
+- `render.yaml`: configuración Blueprint del servicio API en Render.
 
 ## Desarrollo local
 
-1. Instala dependencias en cada aplicación:
+Requisitos: Node.js 20.19+ o 22.12+ y acceso a MongoDB local o Atlas.
 
-   ```bash
-   cd backend && npm install
-   cd ../frontend && npm install
-   ```
+1. En la carpeta `backend`, instala dependencias: `npm install`.
+2. Copia `backend/.env.example` como `backend/.env` y configura `MONGODB_URI`, `SESSION_SECRET` y `ALLOWED_ORIGINS`.
+3. En la carpeta `frontend`, instala dependencias: `npm install`.
+4. Copia `frontend/.env.example` como `frontend/.env`. Para desarrollo, `VITE_API_URL=http://localhost:3000`.
+5. Abre dos terminales: en `backend`, ejecuta `npm run dev`; en `frontend`, ejecuta `npm run dev`.
+6. Abre <http://localhost:5173>. La API local está en <http://localhost:3000>.
 
-2. Copia `backend/.env.example` a `backend/.env` y configura `MONGODB_URI` y un `SESSION_SECRET aleatorio`.
-3. Copia `frontend/.env.example` a `frontend/.env`. El valor de ejemplo apunta a `http://localhost:3000`.
-4. En dos terminales, ejecuta `npm run dev` dentro de `backend` y `frontend`.
-5. Abre <http://localhost:5173>. La API está en <http://localhost:3000>; su comprobación de salud es `/health`.
-
-## Funciones disponibles y límites
-
-- El catálogo y los detalles de productos se cargan desde MongoDB por la API.
-- Buscar filtra nombre, descripción y categoría; los botones de categoría aplican un filtro.
-- El carrito solo permite agregar productos con sesión iniciada, se guarda por cuenta en ese navegador y limita las cantidades al stock publicado. El botón de finalizar compra solo informa que el pago está pendiente; no procesa pedidos ni pagos.
-- El asistente se llama **Nix**. Usa la API Responses de OpenAI desde el backend y consulta el catálogo activo de MongoDB. Solo usa la política de envío y el contacto si se configuran. No inventa datos: cuando faltan, lo indica y pide confirmarlos. Si la API de IA no está configurada o falla, muestra una respuesta local de respaldo. La clave se guarda solo en el backend. La ruta del asistente limita cada IP a 30 consultas por minuto.
-- Para procesar pagos y pedidos falta elegir y configurar un proveedor de pago y definir el flujo de pedidos.
-- Antes de publicar, añade un canal real de soporte y políticas de envío. El asistente requiere una clave de OpenAI; sin ella, funciona el respaldo guiado. No hay credenciales de pago ni pasarela integradas.
+No subas archivos `.env`, contraseñas, URI de MongoDB ni claves de API al repositorio.
 
 ## Variables de entorno
 
-Backend (`backend/.env`):
+Configurar en el servicio API de Render:
 
-- `MONGODB_URI`: URI de conexión y base de datos MongoDB.
-- `SESSION_SECRET`: secreto aleatorio y privado para las sesiones.
-- `ALLOWED_ORIGINS`: orígenes web autorizados separados por coma; incluye `http://localhost:5173` en desarrollo y el dominio Vercel en producción.
-- `PORT`: opcional; Render lo proporciona automáticamente.
-- `NODE_ENV`: define `production` en despliegue.
-- `OPENAI_API_KEY`: clave privada de API para habilitar respuestas generativas; nunca la pongas en el frontend.
-- `OPENAI_MODEL`: modelo habilitado en tu cuenta (por defecto `gpt-6-astra`).
-- `SHIPPING_POLICY`: texto con la política confirmada de cobertura, costo y plazos.
-- `SUPPORT_CONTACT`: correo, teléfono o canal real para derivar preguntas no resueltas.
+| Variable | Uso |
+|---|---|
+| `MONGODB_URI` | URI de Atlas con la base `Urbanix`. |
+| `SESSION_SECRET` | Secreto privado para firmar sesiones; Render puede generarlo. |
+| `ALLOWED_ORIGINS` | Dominio exacto del frontend: `https://urbanix-yyv9.onrender.com`. Para desarrollo, agrega `http://localhost:5173` separado por coma. |
+| `NODE_ENV` | `production` en Render. |
+| `PORT` | Render lo proporciona automáticamente. |
+| `OPENAI_API_KEY` | Clave privada para habilitar las respuestas generativas de Nix. |
+| `OPENAI_MODEL` | Modelo disponible en la cuenta de OpenAI; el valor predeterminado del proyecto es `gpt-6-astra`. |
+| `SHIPPING_POLICY` | Información confirmada sobre cobertura, costos y tiempos de envío. |
+| `SUPPORT_CONTACT` | Correo, teléfono u otro canal de soporte de la tienda. |
 
-Frontend (`frontend/.env`):
+Configurar en el Static Site del frontend, antes de compilar:
 
-- `VITE_API_URL`: URL pública de la API. Debe establecerse antes de compilar; Vite incorpora este valor al frontend.
+| Variable | Valor |
+|---|---|
+| `VITE_API_URL` | `https://urbanix-api.onrender.com` |
 
-No subas archivos `.env` ni secretos al repositorio.
+Vite incluye `VITE_API_URL` en la compilación del sitio; después de cambiarla, vuelve a desplegar el frontend.
+
+## Despliegue actual en Render
+
+Los dos servicios deben usar la rama `migracion-react`:
+
+1. **API (`urbanix-api`)**: servicio Web con directorio raíz `backend`, comando de compilación `npm ci` y comando de inicio `npm start`. La ruta de salud es `/health`.
+2. **Frontend (`urbanix-yyv9`)**: Static Site con directorio raíz `frontend`, comando de compilación `npm ci && npm run build` y directorio publicado `dist`. Define `VITE_API_URL` con la URL de la API.
+3. En el entorno de la API, define `ALLOWED_ORIGINS` con `https://urbanix-yyv9.onrender.com` exactamente. Si cambias el dominio del frontend, actualiza este valor y despliega de nuevo la API.
+4. Comprueba `/health`, `/api/productos`, el inicio de sesión, el carrito y Nix desde el dominio de la tienda.
+
+El servicio API del plan gratuito puede suspenderse cuando no recibe tráfico; el primer acceso posterior puede tardar. El frontend estático permanece publicado en la URL pública de Render.
 
 ## Verificaciones
 
-Desde `frontend`: `npm run lint` y `npm run build`. En `backend`: `npm test` valida entradas inválidas y el modo sin clave de IA; el endpoint `/health` permite comprobar que la API arrancó. Los flujos autenticados y del catálogo requieren una base de datos configurada.
+- Frontend: desde `frontend`, ejecuta `npm run lint` y `npm run build`.
+- Backend: desde `backend`, ejecuta `npm test`.
+- API en producción: abre `/health` y `/api/productos` en las URL indicadas arriba.
+- Flujo de compra del prototipo: prueba el catálogo sin iniciar sesión; verifica que no se vean el botón ni el panel del carrito. Inicia sesión y comprueba el carrito, Mi cuenta y el cierre de sesión.
 
-## Despliegue gratuito
-
-La configuración está preparada para **Vercel Hobby** (frontend estático) y **Render Free** (API Express). Render puede suspender la instancia gratuita cuando no recibe tráfico, por lo que el primer acceso puede tardar. El repositorio debe estar conectado a ambos servicios:
-
-1. En Render, crea un Blueprint desde la raíz del repositorio usando `render.yaml`. Configura `MONGODB_URI` con una base MongoDB Atlas y `ALLOWED_ORIGINS` con `http://localhost:5173` y el dominio final de Vercel, separados por coma. Render genera `SESSION_SECRET`; configura también `OPENAI_API_KEY`, `SHIPPING_POLICY` y `SUPPORT_CONTACT`.
-2. En Vercel, importa el mismo repositorio y define `frontend` como directorio raíz. Configura `VITE_API_URL` con la URL `https://...onrender.com` de la API y despliega.
-3. Añade el dominio final de Vercel a `ALLOWED_ORIGINS` en Render y redepliega la API.
-4. Comprueba `https://...onrender.com/health` y luego los productos, sesiones y el asistente en el dominio web.
-
-Se necesitan cuentas propias en Vercel, Render y MongoDB Atlas, una base con productos cargados y autorización para conectar el repositorio. El dominio público final depende de esos despliegues y de cargar datos de productos, políticas de envío y un contacto de soporte. La generación de texto usa la [API Responses de OpenAI](https://developers.openai.com/api/docs/guides/text).
+La integración de texto utiliza la [API Responses de OpenAI](https://developers.openai.com/api/docs/guides/text).
