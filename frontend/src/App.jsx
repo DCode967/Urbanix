@@ -76,11 +76,14 @@ function App() {
 
   const agregarAlCarrito = (producto) => {
     const id = producto.id || producto._id
+    const stock = Number(producto.stock)
+    if (stock <= 0) return
     setCarrito((prev) => {
       const existente = prev.find((item) => item.id === id)
       if (existente) {
+        if (existente.cantidad >= stock) return prev
         return prev.map((item) =>
-          item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
+          item.id === id ? { ...item, stock, cantidad: item.cantidad + 1 } : item
         )
       }
       return [
@@ -90,6 +93,7 @@ function App() {
           nombre: producto.nombre,
           precio: Number(producto.precio),
           imagen: producto.imagen,
+          stock,
           cantidad: 1
         }
       ]
@@ -103,7 +107,7 @@ function App() {
 
   const aumentarCantidad = (id) => {
     setCarrito((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item))
+      prev.map((item) => (item.id === id && item.cantidad < Number(item.stock) ? { ...item, cantidad: item.cantidad + 1 } : item))
     )
   }
 

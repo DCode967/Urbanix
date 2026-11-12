@@ -1,6 +1,7 @@
 function ProductCard({ producto, onAgregar }) {
+  const agotado = Number(producto.stock) <= 0
   const handleAgregar = () => {
-    onAgregar(producto)
+    if (!agotado) onAgregar(producto)
   }
 
   return (
@@ -15,7 +16,8 @@ function ProductCard({ producto, onAgregar }) {
       <h3>{producto.nombre}</h3>
       <p>{producto.descripcion}</p>
       <p>${Number(producto.precio).toLocaleString('es-CO')}</p>
-      <button type="button" className="button agregar-carrito" onClick={handleAgregar}>Agregar al carrito</button>
+      <p>{agotado ? 'Agotado' : `${producto.stock} disponible(s)`}</p>
+      <button type="button" className="button agregar-carrito" onClick={handleAgregar} disabled={agotado}>{agotado ? 'Agotado' : 'Agregar al carrito'}</button>
     </article>
   )
 }

@@ -40,12 +40,12 @@ export default function StoreAssistant({ productos, cargando }) {
   }
   return (
     <div className="asistente-tienda">
-      {abierto && <section className="asistente-panel" aria-label="Asistente de Urbanix">
-        <header><div><strong>Asistente Urbanix</strong><span>Productos y envíos</span></div><button type="button" aria-label="Cerrar asistente" onClick={() => setAbierto(false)}>×</button></header>
-        <div className="asistente-mensajes" aria-live="polite"><p className="mensaje-asistente">Hola. Puedo ayudarte con el catálogo y los datos de envío publicados.</p>{mensajes.map((mensaje, indice) => <p key={indice} className={`mensaje-${mensaje.tipo}`}>{mensaje.texto}</p>)}</div>
+      {abierto && <section className="asistente-panel" aria-label="Nix, asistente de Urbanix">
+        <header><div><strong>Nix</strong><span>Asistente de Urbanix · Productos y envíos</span></div><button type="button" aria-label="Cerrar Nix" onClick={() => setAbierto(false)}>×</button></header>
+        <div className="asistente-mensajes" aria-live="polite"><p className="mensaje-asistente">¡Hola! Soy Nix. Puedo ayudarte con el catálogo y los datos de envío publicados.</p>{mensajes.map((mensaje, indice) => <p key={indice} className={`mensaje-${mensaje.tipo}`}>{mensaje.texto}</p>)}</div>
         <form onSubmit={enviar}><label className="sr-only" htmlFor="pregunta-asistente">Pregunta</label><input id="pregunta-asistente" value={pregunta} onChange={(event) => setPregunta(event.target.value)} placeholder="Pregunta por un producto o envío" disabled={enviando} /><button type="submit" disabled={enviando}>{enviando ? 'Consultando…' : 'Enviar'}</button></form>
       </section>}
-      <button type="button" className="asistente-boton" aria-expanded={abierto} onClick={() => setAbierto((estado) => !estado)}>{abierto ? 'Cerrar ayuda' : '¿Necesitas ayuda?'}</button>
+      <button type="button" className="asistente-boton" aria-expanded={abierto} onClick={() => setAbierto((estado) => !estado)}>{abierto ? 'Cerrar Nix' : 'Habla con Nix'}</button>
     </div>
   )
 }

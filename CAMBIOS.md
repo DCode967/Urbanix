@@ -15,7 +15,8 @@
 ## Mejoras y tareas pendientes
 
 - El buscador filtra el catálogo por nombre, descripción y categoría; los botones de categoría aplican el filtro.
-- El asistente móvil consulta la API Responses de OpenAI con datos de productos de MongoDB y las políticas/contacto configurados. Si faltan datos, los reconoce; si la IA falla, usa una respuesta guiada de respaldo.
+- El asistente móvil, ahora llamado Nix, consulta la API Responses de OpenAI con datos de productos de MongoDB y las políticas/contacto configurados. Si faltan datos, los reconoce; si la IA falla, usa una respuesta guiada de respaldo.
+- El carrito limita las cantidades al stock publicado. El pago y la creación de pedidos siguen pendientes de integrar con un proveedor.
 - La API permite configurar CORS por `ALLOWED_ORIGINS`, utiliza cookies seguras en producción y expone `/health`.
 - Se añadió una configuración inicial de Vercel para el frontend y Render para la API; los pasos están en el README.
 - Pendiente: cargar productos reales, proporcionar OPENAI_API_KEY, publicar políticas de envío, indicar correo/teléfono de soporte, conectar cuentas/dominios de hosting y MongoDB Atlas. El carrito no procesa pagos todavía.

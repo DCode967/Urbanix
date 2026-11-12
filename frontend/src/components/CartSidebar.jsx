@@ -29,10 +29,11 @@ function CartSidebar({ abierto, onCerrar, carrito, onAumentar, onDisminuir, onEl
                 <div className="item-carrito-info">
                   <h3>{producto.nombre}</h3>
                   <p className="item-precio">{formatearPrecio(producto.precio)}</p>
+                  {Number.isFinite(Number(producto.stock)) && <p>Stock publicado: {producto.stock}</p>}
                   <div className="controles-cantidad">
                     <button type="button" className="boton-cantidad disminuir" aria-label="Disminuir cantidad" onClick={() => onDisminuir(producto.id)}>−</button>
                     <span>{producto.cantidad}</span>
-                    <button type="button" className="boton-cantidad aumentar" aria-label="Aumentar cantidad" onClick={() => onAumentar(producto.id)}>+</button>
+                    <button type="button" className="boton-cantidad aumentar" aria-label="Aumentar cantidad" onClick={() => onAumentar(producto.id)} disabled={Number.isFinite(Number(producto.stock)) && producto.cantidad >= Number(producto.stock)}>+</button>
                   </div>
                 </div>
                 <button type="button" className="boton-eliminar" aria-label="Eliminar producto" onClick={() => onEliminar(producto.id)}>🗑️</button>
