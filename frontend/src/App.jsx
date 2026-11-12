@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Header from './components/Header'
 import Nav from './components/Nav'
 import AccountPanel from './components/AccountPanel'
@@ -27,6 +27,7 @@ function App() {
   const [errorProductos, setErrorProductos] = useState('')
   const [busqueda, setBusqueda] = useState('')
   const [filtro, setFiltro] = useState('')
+  const solicitudSesion = useRef(0)
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -43,8 +44,10 @@ function App() {
 
   useEffect(() => {
     // cargar sesión
+    const idSolicitud = ++solicitudSesion.current
     obtenerSesion()
       .then((resultado) => {
+        if (idSolicitud !== solicitudSesion.current) return
         if (resultado && resultado.user) {
           setUsuario(resultado.user)
           try {
@@ -59,18 +62,23 @@ function App() {
         }
       })
       .catch(() => {
+        if (idSolicitud !== solicitudSesion.current) return
         setUsuario(null)
         setCarrito([])
       })
       .finally(() => {
+        if (idSolicitud !== solicitudSesion.current) return
         // Descarta el carrito anónimo de versiones anteriores.
         localStorage.removeItem('urbanix-carrito')
         setSesionVerificada(true)
       })
+    return () => { solicitudSesion.current += 1 }
   }, [])
 
   const handleInicioSesion = (usuarioAutenticado) => {
+    solicitudSesion.current += 1
     setUsuario(usuarioAutenticado)
+    setSesionVerificada(true)
     try {
       const guardado = JSON.parse(localStorage.getItem(`urbanix-carrito-${usuarioAutenticado.correo}`) || '[]')
       setCarrito(Array.isArray(guardado) ? guardado : [])
@@ -159,6 +167,7 @@ function App() {
   const seleccionarCategoria = (categoria) => { setBusqueda(categoria); setFiltro(categoria); document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }) }
 
   const handleCerrarSesion = async () => {
+    solicitudSesion.current += 1
     try {
       await cerrarSesion()
     } catch {
@@ -166,6 +175,7 @@ function App() {
     }
     setUsuario(null)
     setCarrito([])
+    setCarritoAbierto(false)
     setCuentaAbierta(false)
     window.location.hash = '#/'
   }
@@ -184,9 +194,10 @@ function App() {
         busqueda={busqueda}
         onCambiarBusqueda={setBusqueda}
         onBuscar={buscarProductos}
-        onAbrirCarrito={() => setCarritoAbierto(true)}
+        onAbrirCarrito={() => { if (usuario) setCarritoAbierto(true) }}
         onAbrirCuenta={() => setCuentaAbierta(true)}
         usuario={usuario}
+        cuentaAbierta={cuentaAbierta}
       />
       <Nav />
       <AccountPanel
@@ -205,7 +216,7 @@ function App() {
       </main>
       <Footer />
       <StoreAssistant productos={productos} cargando={cargandoProductos} />
-      <CartSidebar
+      {usuario && <CartSidebar
         abierto={carritoAbierto}
         onCerrar={() => setCarritoAbierto(false)}
         carrito={carrito}
@@ -213,7 +224,7 @@ function App() {
         onDisminuir={disminuirCantidad}
         onEliminar={eliminarDelCarrito}
         onVaciar={vaciarCarrito}
-      />
+      />}
     </>
   )
 }
