@@ -1545,7 +1545,8 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0;
-    overflow-x: hidden;
+    /* `hidden` crea un contenedor de scroll que puede romper position: sticky. */
+    overflow-x: clip;
 }
 
 img {
