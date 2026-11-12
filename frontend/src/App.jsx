@@ -162,6 +162,9 @@ function App() {
   }
 
   const cantidadTotal = carrito.reduce((total, item) => total + item.cantidad, 0)
+  // La interfaz de compra se habilita solo después de confirmar la sesión con la API
+  // o de recibir una respuesta exitosa del endpoint de inicio de sesión.
+  const usuarioActivo = sesionVerificada ? usuario : null
   const productosFiltrados = productos.filter((producto) => `${producto.nombre} ${producto.descripcion} ${producto.categoria}`.toLocaleLowerCase('es').includes(filtro.trim().toLocaleLowerCase('es')))
   const buscarProductos = () => { setFiltro(busqueda.trim()); document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }) }
   const seleccionarCategoria = (categoria) => { setBusqueda(categoria); setFiltro(categoria); document.getElementById('tienda')?.scrollIntoView({ behavior: 'smooth' }) }
@@ -194,29 +197,29 @@ function App() {
         busqueda={busqueda}
         onCambiarBusqueda={setBusqueda}
         onBuscar={buscarProductos}
-        onAbrirCarrito={() => { if (usuario) setCarritoAbierto(true) }}
+        onAbrirCarrito={() => { if (usuarioActivo) setCarritoAbierto(true) }}
         onAbrirCuenta={() => setCuentaAbierta(true)}
-        usuario={usuario}
+        usuario={usuarioActivo}
         cuentaAbierta={cuentaAbierta}
       />
       <Nav />
       <AccountPanel
         abierto={cuentaAbierta}
         onCerrar={() => setCuentaAbierta(false)}
-        usuario={usuario}
+        usuario={usuarioActivo}
         onCerrarSesion={handleCerrarSesion}
       />
       <main>
         <Hero />
         <Categories onSeleccionar={seleccionarCategoria} />
-        <ProductList productos={productosFiltrados} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} autenticado={Boolean(usuario)} sesionVerificada={sesionVerificada} filtro={filtro} onLimpiarFiltro={() => { setFiltro(''); setBusqueda('') }} />
+        <ProductList productos={productosFiltrados} cargando={cargandoProductos} error={errorProductos} onAgregar={agregarAlCarrito} autenticado={Boolean(usuarioActivo)} sesionVerificada={sesionVerificada} filtro={filtro} onLimpiarFiltro={() => { setFiltro(''); setBusqueda('') }} />
         <Offers />
         <Benefits />
         <Testimonials />
       </main>
       <Footer />
       <StoreAssistant productos={productos} cargando={cargandoProductos} />
-      {usuario && <CartSidebar
+      {usuarioActivo && <CartSidebar
         abierto={carritoAbierto}
         onCerrar={() => setCarritoAbierto(false)}
         carrito={carrito}
