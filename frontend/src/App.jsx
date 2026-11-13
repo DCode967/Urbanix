@@ -97,7 +97,9 @@ function App() {
   }
 
   useEffect(() => {
+    if (ruta === '#/admin' || ruta === '#/login' || ruta === '#/registro') return
     setErrorProductos('')
+    setCargandoProductos(true)
     obtenerProductos()
       .then((data) => {
         setProductos(Array.isArray(data) ? data : [])
@@ -108,7 +110,7 @@ function App() {
       .finally(() => {
         setCargandoProductos(false)
       })
-  }, [])
+  }, [ruta])
 
   const agregarAlCarrito = (producto) => {
     if (!usuario || !sesionVerificada) {
