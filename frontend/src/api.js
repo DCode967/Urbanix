@@ -18,6 +18,21 @@ export async function obtenerProductosAdmin() {
   return respuesta.json();
 }
 
+async function solicitarAdmin(url, opciones = {}) {
+  const respuesta = await fetch(`${API_URL}${url}`, {
+    ...opciones,
+    headers: { ...(opciones.body ? { 'Content-Type': 'application/json' } : {}), ...opciones.headers },
+    credentials: 'include'
+  })
+  const resultado = await respuesta.json().catch(() => ({}))
+  if (!respuesta.ok) throw new Error(resultado.message || 'No se pudo completar la acción administrativa.')
+  return resultado
+}
+
+export const crearProductoAdmin = (datos) => solicitarAdmin('/api/productos', { method: 'POST', body: JSON.stringify(datos) })
+export const actualizarProductoAdmin = (id, datos) => solicitarAdmin(`/api/productos/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(datos) })
+export const eliminarProductoAdmin = (id) => solicitarAdmin(`/api/productos/${encodeURIComponent(id)}`, { method: 'DELETE' })
+
 export async function obtenerSesion() {
   const respuesta = await fetch(`${API_URL}/api/auth/me`, {
     credentials: 'include'

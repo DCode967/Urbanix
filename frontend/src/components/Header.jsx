@@ -1,4 +1,4 @@
-function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario, cuentaAbierta, busqueda, onCambiarBusqueda, onBuscar }) {
+function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, onAbrirAdmin, usuario, cuentaAbierta, busqueda, onCambiarBusqueda, onBuscar }) {
   return (
     <header id="inicio" className="header">
       <div className="header-contenido">
@@ -20,6 +20,7 @@ function Header({ cantidadCarrito, onAbrirCarrito, onAbrirCuenta, usuario, cuent
           {usuario && (
             <button type="button" id="abrir-mi-cuenta" className="boton-cuenta" aria-controls="mi-cuenta" aria-expanded={cuentaAbierta} onClick={onAbrirCuenta}>Mi cuenta</button>
           )}
+          {usuario?.rol === 'admin' && <a className="admin-enlace" href="#/admin" onClick={onAbrirAdmin}>Administración</a>}
           {usuario && <button type="button" id="abrir-carrito" className="boton-carrito" onClick={onAbrirCarrito}>
             Ver carrito <span id="contador-carrito">{cantidadCarrito}</span>
           </button>}

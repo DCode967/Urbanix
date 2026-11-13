@@ -13,6 +13,7 @@ import Footer from './components/Footer'
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
 import StoreAssistant from './components/StoreAssistant'
+import AdminPanel from './components/AdminPanel'
 import { obtenerProductos, obtenerSesion, cerrarSesion } from './api'
 
 function App() {
@@ -36,6 +37,12 @@ function App() {
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
+
+  useEffect(() => {
+    if (ruta === '#/admin' && sesionVerificada && usuario?.rol !== 'admin') {
+      window.location.hash = usuario ? '#/' : '#/login'
+    }
+  }, [ruta, sesionVerificada, usuario])
 
   useEffect(() => {
     if (!usuario || !sesionVerificada) return
@@ -189,6 +196,11 @@ function App() {
   if (ruta === '#/registro') {
     return <RegisterPage />
   }
+  if (ruta === '#/admin') {
+    if (!sesionVerificada) return <main className="admin-pagina"><p>Verificando acceso…</p></main>
+    if (usuario?.rol !== 'admin') return <LoginPage onLogin={handleInicioSesion} />
+    return <AdminPanel usuario={usuario} onVolver={() => { window.location.hash = '#/' }} />
+  }
 
   return (
     <>
@@ -201,6 +213,7 @@ function App() {
         onAbrirCuenta={() => setCuentaAbierta(true)}
         usuario={usuarioActivo}
         cuentaAbierta={cuentaAbierta}
+        onAbrirAdmin={() => { window.location.hash = '#/admin' }}
       />
       <Nav />
       <AccountPanel
