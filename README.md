@@ -1,63 +1,93 @@
 # Urbanix
 
-Tienda en línea básica desarrollada con HTML, CSS, JavaScript, Node.js, Express y MongoDB.
+Urbanix es una tienda web en español creada como prototipo. El frontend usa React y Vite; la API usa Node.js y Express; los productos y las sesiones se guardan en MongoDB Atlas.
 
-## Estructura
+## Sitio publicado
 
-- `public/`: páginas, estilos, scripts e imágenes servidos por Express.
-- `public/registro.html`: formulario para crear una cuenta, con diseño adaptable a juego con el login.
-- `public/js/registro.js`: envía el registro a la API con `fetch`.
-- `public/login.html` y `public/js/login.js`: formulario, validaciones locales, envío del inicio de sesión a la API y enlace para crear una cuenta.
-- `public/js/sesion.js`: consulta `GET /api/auth/me` al cargar la página de inicio y muestra el botón del carrito cuando hay una sesión activa.
-- `public/index.html`: el botón «Mi cuenta» abre un panel con el nombre, correo y rol del usuario con sesión activa.
-- `public/js/sesion.js`: permite cerrar sesión desde el panel «Mi cuenta» y vuelve a cargar la tienda como visitante.
-- `src/server.js`: servidor Express, conexión a MongoDB, sesiones y montaje de rutas.
-- `src/config/db.js`: conexión de Mongoose a MongoDB.
-- `src/models/`: esquemas de productos y usuarios.
-- `src/controllers/`: lógica de la API.
-- `src/routes/`: rutas de productos y autenticación.
-- `src/utils/password.js`: generación y verificación de hashes de contraseña con `scrypt`.
-- `src/middleware/auth.middleware.js`: comprueba sesiones activas con `requireAuth` y restringe el acceso por rol administrador con `requireAdmin`.
+- **Tienda:** <https://urbanix-yyv9.onrender.com>
+- **API:** <https://urbanix-api.onrender.com>
+- **Estado de la API:** <https://urbanix-api.onrender.com/health>
+- **Catálogo de la API:** <https://urbanix-api.onrender.com/api/productos>
+- **Rama desplegada:** `migracion-react`
 
-## Configuración local
+El sitio es público y se puede abrir desde un navegador con conexión a internet. La API gratuita de Render puede tardar alrededor de un minuto en responder después de un periodo sin actividad.
 
-1. Instala las dependencias con `npm install`.
-2. Copia `.env.example` como `.env`.
-3. En `.env`, configura `MONGODB_URI` con la URI de tu base de datos local y `SESSION_SECRET` con un secreto aleatorio. No publiques ni compartas `.env`.
-4. Inicia el servidor con `npm start` y abre `http://localhost:3000`.
+## Funciones
 
-MongoDB debe estar iniciado antes de arrancar el servidor.
+- Catálogo de productos cargado desde MongoDB Atlas; búsqueda por nombre, descripción y categoría.
+- Registro, inicio y cierre de sesión.
+- El botón del carrito y su panel solo aparecen después de confirmar una sesión activa. Para agregar productos también se requiere iniciar sesión.
+- El carrito se guarda localmente por cuenta y por navegador; las cantidades respetan el stock publicado.
+- **Nix**, asistente para preguntas sobre el catálogo y los datos de envío. Consulta la API Responses de OpenAI desde el backend y usa los productos activos de la base. Si faltan datos o falla la IA, informa que no puede confirmarlos y ofrece una respuesta de respaldo.
 
-## Registro de usuarios
+## Límites del prototipo
 
-El formulario de `public/registro.html` envía `nombre`, `correo` y `password` como JSON a `POST /api/auth/registro`.
+- El botón de finalizar compra es informativo: todavía no se crean pedidos ni se reciben pagos.
+- Nix necesita `OPENAI_API_KEY` en las variables de entorno del backend para responder con IA. Sin esa clave, usa el respaldo local.
+- Para responder con datos precisos sobre envíos y derivar al soporte, hay que configurar `SHIPPING_POLICY` y `SUPPORT_CONTACT` en Render.
+- El carrito se guarda en el navegador, no en MongoDB; no se sincroniza entre dispositivos.
 
-El servidor valida esos campos, normaliza el correo, genera un hash de la contraseña y crea la cuenta con el rol `usuario`. El correo debe ser único. La contraseña original no se guarda.
+## Tecnologías y estructura
 
-## Sesiones y autenticación
+- `frontend/`: React, Vite, componentes y estilos.
+- `backend/`: API Express, autenticación por sesión, catálogo y asistente Nix.
+- `backend/src/models/productos.js`: modelo que guarda productos en la colección `productos` (minúscula).
+- Base de datos usada en Atlas: `Urbanix` (respetar mayúsculas y minúsculas).
+- `render.yaml`: configuración Blueprint del servicio API en Render.
 
-`server.js` configura `express-session` y guarda las sesiones en MongoDB mediante `connect-mongo`. La cookie usa `HttpOnly` y `SameSite=Lax`; `Secure` se activa cuando `NODE_ENV` es `production`.
+## Desarrollo local
 
-El inicio de sesión está conectado en `POST /api/auth/login` y espera `correo` y `password`. Comprueba la cuenta activa y la contraseña; si son correctas, crea una sesión en MongoDB y devuelve los datos públicos del usuario. El formulario de login muestra el resultado recibido del servidor.
+Requisitos: Node.js 20.19+ o 22.12+ y acceso a MongoDB local o Atlas.
 
-`POST /api/auth/logout` destruye la sesión guardada y expira la cookie `connect.sid`. El botón «Cerrar sesión» del panel de cuenta llama a esta ruta y recarga la página cuando el cierre se completa.
+1. En la carpeta `backend`, instala dependencias: `npm install`.
+2. Copia `backend/.env.example` como `backend/.env` y configura `MONGODB_URI`, `SESSION_SECRET` y `ALLOWED_ORIGINS`.
+3. En la carpeta `frontend`, instala dependencias: `npm install`.
+4. Copia `frontend/.env.example` como `frontend/.env`. Para desarrollo, `VITE_API_URL=http://localhost:3000`.
+5. Abre dos terminales: en `backend`, ejecuta `npm run dev`; en `frontend`, ejecuta `npm run dev`.
+6. Abre <http://localhost:5173>. La API local está en <http://localhost:3000>.
 
-`GET /api/auth/me` aplica `requireAuth` antes de devolver los datos públicos del usuario asociado a la sesión. El middleware busca al usuario en MongoDB, excluye `passwordHash` y rechaza sesiones sin usuario válido o con la cuenta inactiva mediante `401`.
+No subas archivos `.env`, contraseñas, URI de MongoDB ni claves de API al repositorio.
 
-`requireAdmin` comprueba que el usuario autenticado tenga el rol `admin`; si no, responde con `403`. Se ejecuta después de `requireAuth` en las rutas que requieren permisos administrativos.
+## Variables de entorno
 
-`POST /api/productos` crea productos y requiere una sesión activa con rol `admin`. El servidor valida los campos, guarda el producto en MongoDB y devuelve el documento creado con estado `201`.
+Configurar en el servicio API de Render:
 
-`PUT /api/productos/:id` actualiza los campos de un producto existente. También requiere una sesión activa con rol `admin`; devuelve `404` si el producto no existe y `400` si el ID o los datos son inválidos.
+| Variable | Uso |
+|---|---|
+| `MONGODB_URI` | URI de Atlas con la base `Urbanix`. |
+| `SESSION_SECRET` | Secreto privado para firmar sesiones; Render puede generarlo. |
+| `ALLOWED_ORIGINS` | Dominio exacto del frontend: `https://urbanix-yyv9.onrender.com`. Para desarrollo, agrega `http://localhost:5173` separado por coma. |
+| `NODE_ENV` | `production` en Render. |
+| `PORT` | Render lo proporciona automáticamente. |
+| `OPENAI_API_KEY` | Clave privada para habilitar las respuestas generativas de Nix. |
+| `OPENAI_MODEL` | Modelo disponible en la cuenta de OpenAI; el valor predeterminado del proyecto es `gpt-6-astra`. |
+| `SHIPPING_POLICY` | Información confirmada sobre cobertura, costos y tiempos de envío. |
+| `SUPPORT_CONTACT` | Correo, teléfono u otro canal de soporte de la tienda. |
 
-`DELETE /api/productos/:id` realiza una eliminación lógica: cambia `activo` a `false` para que el producto deje de aparecer en el catálogo, pero conserva el documento en MongoDB. Requiere una sesión activa con rol `admin`.
+Configurar en el Static Site del frontend, antes de compilar:
 
-En `public/index.html`, el carrito, el acceso a «Mi cuenta» y el panel de perfil comienzan ocultos. `public/js/sesion.js` consulta `/api/auth/me`; si hay sesión, muestra el carrito y el acceso al panel, y rellena el perfil con nombre, correo y rol. La regla `[hidden]` de `public/css/style.css` evita que los estilos generales de los botones muestren controles ocultos. Esta comprobación solo controla lo que aparece en la interfaz; las operaciones protegidas también deberán validarse en el servidor.
+| Variable | Valor |
+|---|---|
+| `VITE_API_URL` | `https://urbanix-api.onrender.com` |
 
-Se comprobó localmente que el servidor arranca, que `/api/auth/me` devuelve `401` sin sesión, que un intento de inicio de sesión con credenciales inválidas devuelve `401`, que `/api/auth/logout` responde correctamente y expira la cookie, y que las páginas principales cargan. Falta comprobar un inicio de sesión válido y un registro real, las rutas administrativas de productos con una sesión de administrador y la interfaz administrativa.
+Vite incluye `VITE_API_URL` en la compilación del sitio; después de cambiarla, vuelve a desplegar el frontend.
 
-## Ejecutar
+## Despliegue actual en Render
 
-```powershell
-npm start
-```
+Los dos servicios deben usar la rama `migracion-react`:
+
+1. **API (`urbanix-api`)**: servicio Web con directorio raíz `backend`, comando de compilación `npm ci` y comando de inicio `npm start`. La ruta de salud es `/health`.
+2. **Frontend (`urbanix-yyv9`)**: Static Site con directorio raíz `frontend`, comando de compilación `npm ci && npm run build` y directorio publicado `dist`. Define `VITE_API_URL` con la URL de la API.
+3. En el entorno de la API, define `ALLOWED_ORIGINS` con `https://urbanix-yyv9.onrender.com` exactamente. Si cambias el dominio del frontend, actualiza este valor y despliega de nuevo la API.
+4. Comprueba `/health`, `/api/productos`, el inicio de sesión, el carrito y Nix desde el dominio de la tienda.
+
+El servicio API del plan gratuito puede suspenderse cuando no recibe tráfico; el primer acceso posterior puede tardar. El frontend estático permanece publicado en la URL pública de Render.
+
+## Verificaciones
+
+- Frontend: desde `frontend`, ejecuta `npm run lint` y `npm run build`.
+- Backend: desde `backend`, ejecuta `npm test`.
+- API en producción: abre `/health` y `/api/productos` en las URL indicadas arriba.
+- Flujo de compra del prototipo: prueba el catálogo sin iniciar sesión; verifica que no se vean el botón ni el panel del carrito. Inicia sesión y comprueba el carrito, Mi cuenta y el cierre de sesión.
+
+La integración de texto utiliza la [API Responses de OpenAI](https://developers.openai.com/api/docs/guides/text).

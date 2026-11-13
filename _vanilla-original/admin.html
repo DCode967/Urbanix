@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo</title>
+</head>
+<body>
+    <div class="dash-board">
+
+        <aside id="sidebar">
+            <div class="sidebar-logo">
+                <h2>Panel Administrativo</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#listar-productos">Productos</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+         <div class="main-content">
+                <header class="topbar">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar...">
+                    </div>
+
+                    <div class="user-profile">
+                        <span>Hola Administrador</span>
+                    </div>
+                </header>
+
+
+                <main class="content-area">
+
+                    <section class="data-section">
+                        <h2>Productos</h2>
+                        <div id="listar-productos" aria-live="polite"></div>
+                    </section>
+
+
+
+                </main>
+         </div>
+                
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
