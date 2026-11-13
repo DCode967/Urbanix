@@ -12,7 +12,7 @@ function Footer() {
       </div>
       <div className="footer-redes">
         Facebook
-        <a href="https://www.instagram.com/anonymus_seller/">Instagram</a>
+        <a href="https://www.instagram.com/Urbanix/">Instagram</a>
         TikTok
       </div>
       <p>© 2026 Mi Tienda Online - Todos los derechos reservados</p>
